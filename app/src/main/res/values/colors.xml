@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Paleta principal - Salud Contigo (ver BRAND.md) -->
+    <color name="primary">#00A680</color>
+    <color name="primary_dark">#007D60</color>
+    <color name="primary_light">#E0F2F1</color>
+    <color name="background_main">#FFFFFF</color>
+    <color name="background_alt">#F4F7F6</color>
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+    <color name="success">#4CAF50</color>
+    <color name="success_light">#E8F5E9</color>
+    <color name="border">#E0E0E0</color>
+
+    <!-- Colores de especialidades medicas -->
+    <color name="esp_cardiologia">#FFEBEE</color>
+    <color name="esp_medicina_general">#E3F2FD</color>
+    <color name="esp_neumologia">#E8F5E9</color>
+    <color name="esp_neurologia">#F3E5F5</color>
+    <color name="esp_gastroenterologia">#FFF3E0</color>
+    <color name="esp_otorrino">#FFF8E1</color>
+    <color name="esp_pediatria">#E0F7FA</color>
+    <color name="esp_default">#F5F5F5</color>
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Tokens del diseno de Login (guia HTML) -->
+    <color name="login_bg">#F2FBF9</color>
+    <color name="login_primary_action">#02C3A7</color>
+    <color name="login_brand">#00877A</color>
+    <color name="login_input_bg">#F4F5F7</color>
+    <color name="login_border">#E5E7EB</color>
+    <color name="login_welcome">#111827</color>
+    <color name="login_placeholder">#9CA3AF</color>
+</resources>

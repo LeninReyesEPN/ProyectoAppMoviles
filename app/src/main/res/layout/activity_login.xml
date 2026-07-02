@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/login_bg"
+    android:fillViewport="true"
+    tools:context=".LoginActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="40dp">
+
+        <!-- Logo -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="20dp"
+            app:cardBackgroundColor="@color/login_primary_action"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="0dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/corazon"
+                android:textColor="@color/white"
+                android:textSize="40sp" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Marca -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:text="@string/titulo_app"
+            android:textColor="@color/login_brand"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <!-- Bienvenida -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@string/login_bienvenido"
+            android:textColor="@color/login_welcome"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:text="@string/login_ingresa_cuenta"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/texto_body" />
+
+        <!-- Campo: Cedula o Telefono -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@string/hint_cedula_telefono"
+            android:textColor="@color/text_primary"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/txtCedula"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/touch_min"
+            android:background="@drawable/bg_input"
+            android:hint="@string/login_placeholder_cedula"
+            android:inputType="number"
+            android:paddingHorizontal="16dp"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/login_placeholder"
+            android:textSize="@dimen/texto_body"
+            android:importantForAutofill="no" />
+
+        <!-- Campo: Contrasena -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/hint_contrasena"
+            android:textColor="@color/text_primary"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/txtPassword"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/touch_min"
+            android:background="@drawable/bg_input"
+            android:hint="@string/login_placeholder_password"
+            android:inputType="textPassword"
+            android:paddingHorizontal="16dp"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/login_placeholder"
+            android:textSize="@dimen/texto_body"
+            android:importantForAutofill="no" />
+
+        <!-- Boton principal INGRESAR -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnIngresar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/touch_min"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/login_primary_action"
+            android:text="@string/btn_ingresar"
+            android:textColor="@color/white"
+            android:textSize="@dimen/texto_body"
+            android:textStyle="bold"
+            app:cornerRadius="14dp" />
+
+        <!-- Boton biometrico -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnHuella"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/touch_min"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="@color/white"
+            android:text="@string/btn_biometrico"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/texto_body"
+            app:cornerRadius="14dp"
+            app:icon="@drawable/ic_fingerprint"
+            app:iconGravity="textStart"
+            app:iconTint="@color/text_primary"
+            app:strokeColor="@color/login_border" />
+
+        <!-- Separador "o" -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="28dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="@color/login_border" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:text="@string/login_o"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/texto_label" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="@color/login_border" />
+        </LinearLayout>
+
+        <!-- Boton de registro (faltaba en la guia HTML) -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnIrRegistro"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/touch_min"
+            android:backgroundTint="@color/white"
+            android:text="@string/btn_crear_cuenta"
+            android:textColor="@color/login_brand"
+            android:textSize="@dimen/texto_body"
+            android:textStyle="bold"
+            app:cornerRadius="14dp"
+            app:strokeColor="@color/login_brand" />
+
+    </LinearLayout>
+</ScrollView>

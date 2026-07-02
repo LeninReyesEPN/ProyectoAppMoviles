@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">SaludContigo</string>
+
+    <!-- Login -->
+    <string name="titulo_app">Salud Contigo</string>
+    <string name="login_subtitulo">Ingresa para agendar tu cita médica</string>
+    <string name="login_bienvenido">¡Bienvenido!</string>
+    <string name="login_ingresa_cuenta">Ingresa a tu cuenta</string>
+    <string name="hint_cedula">Cédula</string>
+    <string name="hint_cedula_telefono">Cédula o Teléfono</string>
+    <string name="login_placeholder_cedula">0123456789</string>
+    <string name="hint_contrasena">Contraseña</string>
+    <string name="login_placeholder_password">Tu contraseña</string>
+    <string name="btn_ingresar">INGRESAR</string>
+    <string name="btn_biometrico">Huella Digital / Face ID</string>
+    <string name="login_o">o</string>
+    <string name="btn_ir_registro">¿No tienes cuenta? Regístrate</string>
+    <string name="btn_crear_cuenta">CREAR CUENTA NUEVA</string>
+
+    <!-- Registro -->
+    <string name="titulo_crear_cuenta">Crear Cuenta</string>
+    <string name="hint_nombre">Nombre Completo</string>
+    <string name="hint_telefono">Teléfono</string>
+    <string name="btn_registrarme">REGISTRARME</string>
+    <string name="btn_ya_tengo_cuenta">Ya tengo cuenta</string>
+
+    <!-- Home -->
+    <string name="home_saludo">¡Hola, %1$s!</string>
+    <string name="home_saludo_generico">¡Hola!</string>
+    <string name="home_pregunta">¿Qué necesitas hoy?</string>
+    <string name="btn_agendar">AGENDAR NUEVA CITA</string>
+    <string name="btn_ver_citas">VER MIS CITAS</string>
+    <string name="btn_cerrar_sesion">Cerrar sesión</string>
+
+    <!-- Cita -->
+    <string name="cita_regresar">← Regresar</string>
+    <string name="cita_titulo">Elige tu médico o especialidad</string>
+    <string name="esp_medicina_general">🩺 Medicina General</string>
+    <string name="esp_cardiologia">❤️ Cardiología</string>
+    <string name="esp_neumologia">🫁 Neumología</string>
+    <string name="esp_neurologia">🧠 Neurología</string>
+    <string name="btn_volver">VOLVER</string>
+
+    <string name="corazon">♥</string>
+</resources>

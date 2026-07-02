@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Reglas de BRAND.md -->
+    <dimen name="touch_min">60dp</dimen>
+    <dimen name="boton_grande">96dp</dimen>
+    <dimen name="radio_boton">16dp</dimen>
+    <dimen name="radio_boton_grande">20dp</dimen>
+    <dimen name="padding_pantalla">24dp</dimen>
+
+    <!-- Tipografia -->
+    <dimen name="texto_h1">24sp</dimen>
+    <dimen name="texto_h2">20sp</dimen>
+    <dimen name="texto_body">18sp</dimen>
+    <dimen name="texto_label">14sp</dimen>
+</resources>
