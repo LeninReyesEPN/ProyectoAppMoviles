@@ -5,6 +5,7 @@
     <dimen name="boton_grande">96dp</dimen>
     <dimen name="radio_boton">16dp</dimen>
     <dimen name="radio_boton_grande">20dp</dimen>
+    <dimen name="radio_card">16dp</dimen>
     <dimen name="padding_pantalla">24dp</dimen>
 
     <!-- Tipografia -->

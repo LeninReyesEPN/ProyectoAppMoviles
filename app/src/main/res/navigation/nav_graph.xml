@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/home">
+
+    <fragment
+        android:id="@+id/home"
+        android:name="com.example.saludcontigo.ui.home.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/especialidad"
+        android:name="com.example.saludcontigo.ui.booking.EspecialidadFragment"
+        android:label="Especialidad"
+        tools:layout="@layout/fragment_especialidad" />
+
+    <fragment
+        android:id="@+id/fechaHora"
+        android:name="com.example.saludcontigo.ui.booking.FechaHoraFragment"
+        android:label="FechaHora"
+        tools:layout="@layout/fragment_fecha_hora" />
+
+    <fragment
+        android:id="@+id/confirmacion"
+        android:name="com.example.saludcontigo.ui.booking.ConfirmacionFragment"
+        android:label="Confirmacion"
+        tools:layout="@layout/fragment_confirmacion" />
+
+    <fragment
+        android:id="@+id/exito"
+        android:name="com.example.saludcontigo.ui.booking.ExitoFragment"
+        android:label="Exito"
+        tools:layout="@layout/fragment_exito" />
+
+    <fragment
+        android:id="@+id/misCitas"
+        android:name="com.example.saludcontigo.ui.miscitas.MisCitasFragment"
+        android:label="MisCitas"
+        tools:layout="@layout/fragment_mis_citas" />
+
+    <fragment
+        android:id="@+id/perfil"
+        android:name="com.example.saludcontigo.ui.perfil.PerfilFragment"
+        android:label="Perfil"
+        tools:layout="@layout/fragment_perfil" />
+
+</navigation>

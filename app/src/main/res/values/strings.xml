@@ -1,45 +1,121 @@
 <resources>
     <string name="app_name">SaludContigo</string>
+    <string name="corazon">♥</string>
 
-    <!-- Login -->
+    <!-- Login (Pantalla 1) -->
     <string name="titulo_app">Salud Contigo</string>
-    <string name="login_subtitulo">Ingresa para agendar tu cita médica</string>
-    <string name="login_bienvenido">¡Bienvenido!</string>
-    <string name="login_ingresa_cuenta">Ingresa a tu cuenta</string>
-    <string name="hint_cedula">Cédula</string>
-    <string name="hint_cedula_telefono">Cédula o Teléfono</string>
-    <string name="login_placeholder_cedula">0123456789</string>
-    <string name="hint_contrasena">Contraseña</string>
-    <string name="login_placeholder_password">Tu contraseña</string>
-    <string name="btn_ingresar">INGRESAR</string>
-    <string name="btn_biometrico">Huella Digital / Face ID</string>
-    <string name="login_o">o</string>
-    <string name="btn_ir_registro">¿No tienes cuenta? Regístrate</string>
-    <string name="btn_crear_cuenta">CREAR CUENTA NUEVA</string>
+    <string name="login_subtitulo">Tu salud, paso a paso</string>
+    <string name="hint_cedula_telefono">NÚMERO DE CÉDULA O TELÉFONO</string>
+    <string name="login_placeholder_cedula">1234567890</string>
+    <string name="btn_ingresar">Ingresar</string>
+    <string name="login_o_ingresa_con">O ingresa con</string>
+    <string name="btn_huella">Huella</string>
+    <string name="btn_face_id">Face ID</string>
+    <string name="login_footer">Acceso seguro y privado · v2.1.0</string>
+    <string name="login_no_cuenta">¿No tienes cuenta? Regístrate</string>
+    <string name="login_cedula_vacia">Ingresa tu número de cédula o teléfono</string>
+    <string name="login_usuario_no_encontrado">No encontramos una cuenta con esos datos. Regístrate primero.</string>
+    <string name="biometria_no_disponible">Tu dispositivo no tiene huella o Face ID configurado</string>
+    <string name="biometria_titulo">Ingresa con tu huella o Face ID</string>
+    <string name="biometria_subtitulo">Coloca tu dedo en el sensor o mira tu cámara</string>
+    <string name="biometria_sin_sesion">Ingresa primero con tu cédula para activar el acceso rápido</string>
 
     <!-- Registro -->
     <string name="titulo_crear_cuenta">Crear Cuenta</string>
-    <string name="hint_nombre">Nombre Completo</string>
-    <string name="hint_telefono">Teléfono</string>
-    <string name="btn_registrarme">REGISTRARME</string>
+    <string name="registro_subtitulo">Solo te tomará un minuto</string>
+    <string name="hint_nombre">Nombre completo</string>
+    <string name="hint_cedula">Cédula o teléfono</string>
+    <string name="hint_edad">Edad</string>
+    <string name="hint_eps">EPS</string>
+    <string name="btn_registrarme">Registrarme</string>
     <string name="btn_ya_tengo_cuenta">Ya tengo cuenta</string>
+    <string name="registro_nombre_vacio">Escribe tu nombre</string>
+    <string name="registro_cedula_vacia">Escribe tu número de cédula o teléfono</string>
+    <string name="registro_exito">Cuenta creada. Ahora inicia sesión</string>
 
-    <!-- Home -->
-    <string name="home_saludo">¡Hola, %1$s!</string>
-    <string name="home_saludo_generico">¡Hola!</string>
-    <string name="home_pregunta">¿Qué necesitas hoy?</string>
-    <string name="btn_agendar">AGENDAR NUEVA CITA</string>
-    <string name="btn_ver_citas">VER MIS CITAS</string>
-    <string name="btn_cerrar_sesion">Cerrar sesión</string>
+    <!-- Home (Pantalla 2) -->
+    <string name="home_saludo_generico">¡Hola! 👋</string>
+    <string name="home_saludo">%1$s 👋</string>
+    <string name="home_buenos_dias">Buenos días,</string>
+    <string name="home_proxima_cita_label">PRÓXIMA CITA</string>
+    <string name="home_sin_proxima_cita">No tienes citas próximas</string>
+    <string name="home_que_deseas_hacer">¿QUÉ DESEAS HACER?</string>
+    <string name="home_agendar_titulo">Agendar Cita</string>
+    <string name="home_agendar_subtitulo">Nueva consulta médica</string>
+    <string name="home_mis_citas_titulo">Mis Citas</string>
+    <string name="home_mis_citas_subtitulo">Ver citas agendadas</string>
+    <string name="home_stat_total">Citas totales</string>
+    <string name="home_stat_anio">Este año</string>
 
-    <!-- Cita -->
-    <string name="cita_regresar">← Regresar</string>
-    <string name="cita_titulo">Elige tu médico o especialidad</string>
-    <string name="esp_medicina_general">🩺 Medicina General</string>
-    <string name="esp_cardiologia">❤️ Cardiología</string>
-    <string name="esp_neumologia">🫁 Neumología</string>
-    <string name="esp_neurologia">🧠 Neurología</string>
-    <string name="btn_volver">VOLVER</string>
+    <!-- Especialidad (Pantalla 3) -->
+    <string name="paso_1_de_3">Paso 1 de 3</string>
+    <string name="titulo_especialidad">Selecciona Especialidad</string>
+    <string name="disponibilidad_inmediata">Disponibilidad Inmediata</string>
+    <string name="disponibilidad_detalle">Hoy · %1$s (2 horarios disponibles)</string>
+    <string name="btn_continuar_fecha">Continuar a Fecha y Hora</string>
+    <string name="esp_cardiologia">Cardiología</string>
+    <string name="esp_medicina_general">Medicina General</string>
+    <string name="esp_neumologia">Neumología</string>
+    <string name="esp_neurologia">Neurología</string>
+    <string name="doc_cardiologia">Dr. Roberto Vargas</string>
+    <string name="doc_medicina_general">Dra. Lucía Morales</string>
+    <string name="doc_neumologia">Dr. Andrés Castro</string>
+    <string name="doc_neurologia">Dra. Patricia León</string>
 
-    <string name="corazon">♥</string>
+    <!-- Fecha y Hora (Pantalla 4) -->
+    <string name="paso_2_de_3">Paso 2 de 3</string>
+    <string name="titulo_fecha_hora">Fecha y Hora</string>
+    <string name="horario_disponible">HORARIO DISPONIBLE</string>
+    <string name="btn_continuar_confirmar">Continuar a Confirmar</string>
+
+    <!-- Confirmacion (Pantalla 5) -->
+    <string name="paso_3_de_3">Paso 3 de 3</string>
+    <string name="titulo_confirmar">Confirmar Cita</string>
+    <string name="label_fecha">FECHA</string>
+    <string name="label_hora">HORA</string>
+    <string name="label_modalidad">MODALIDAD</string>
+    <string name="label_duracion">DURACIÓN APROX.</string>
+    <string name="modalidad_presencial">Presencial · Consultorio 204</string>
+    <string name="duracion_default">30 minutos</string>
+    <string name="btn_confirmar_cita">Confirmar Cita</string>
+
+    <!-- Exito (Pantalla 6) -->
+    <string name="exito_titulo">¡Cita Agendada!</string>
+    <string name="exito_mensaje">Tu cita con %1$s ha sido confirmada con éxito.</string>
+    <string name="exito_label_especialidad">Especialidad</string>
+    <string name="exito_label_fecha">Fecha</string>
+    <string name="exito_label_hora">Hora</string>
+    <string name="btn_volver_inicio">Volver al Inicio</string>
+
+    <!-- Mis Citas (Pantalla 7) -->
+    <string name="titulo_mis_citas">Mis Citas</string>
+    <string name="mis_citas_contador">%1$d citas agendadas</string>
+    <string name="tab_proximas">Próximas</string>
+    <string name="tab_pasadas">Pasadas</string>
+    <string name="estado_proxima">Próxima</string>
+    <string name="estado_agendada">Agendada</string>
+    <string name="estado_pasada">Pasada</string>
+    <string name="mis_citas_vacio_proximas">No tienes citas próximas todavía</string>
+    <string name="mis_citas_vacio_pasadas">Todavía no tienes citas pasadas</string>
+
+    <!-- Perfil (Pantalla 8) -->
+    <string name="titulo_perfil">Mi Perfil</string>
+    <string name="perfil_anios">%1$d años</string>
+    <string name="perfil_cedula">C.C. %1$s</string>
+    <string name="perfil_stat_total">Citas totales</string>
+    <string name="perfil_stat_anio">Este año</string>
+    <string name="perfil_stat_proxima">Próxima cita</string>
+    <string name="perfil_sin_proxima">—</string>
+    <string name="opt_notificaciones_titulo">Notificaciones</string>
+    <string name="opt_notificaciones_subtitulo">Recordatorios de citas</string>
+    <string name="opt_historial_titulo">Historial Médico</string>
+    <string name="opt_historial_subtitulo">Ver historial completo</string>
+    <string name="opt_cuidador_titulo">Cuidador de Apoyo</string>
+    <string name="opt_cuidador_subtitulo">Configura un contacto de confianza</string>
+    <string name="opt_proximamente">Muy pronto vas a poder usar esta opción</string>
+
+    <!-- Navegacion inferior -->
+    <string name="nav_inicio">Inicio</string>
+    <string name="nav_citas">Citas</string>
+    <string name="nav_perfil">Perfil</string>
 </resources>

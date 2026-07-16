@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Tema base de la app (Material 3) -->
-    <style name="Theme.SaludContigo" parent="Theme.Material3.DayNight.NoActionBar">
+    <!-- Tema base de la app (Material 3, oscuro fijo - ver BRAND.md) -->
+    <style name="Theme.SaludContigo" parent="Theme.Material3.Dark.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorPrimaryDark">@color/bg_darkest</item>
         <item name="colorOnPrimary">@color/white</item>
-        <item name="colorSecondary">@color/primary</item>
-        <item name="android:statusBarColor">@color/primary</item>
-        <item name="android:windowBackground">@color/background_alt</item>
+        <item name="colorSecondary">@color/accent</item>
+        <item name="colorSurface">@color/bg_card</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="android:statusBarColor">@color/bg_app</item>
+        <item name="android:navigationBarColor">@color/bg_app</item>
+        <item name="android:windowBackground">@color/bg_app</item>
+        <item name="android:windowLightStatusBar">false</item>
     </style>
 </resources>

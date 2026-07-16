@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/login_bg"
+    android:background="@color/bg_app"
     android:fillViewport="true"
     tools:context=".LoginActivity">
 
@@ -14,15 +14,16 @@
         android:orientation="vertical"
         android:gravity="center_horizontal"
         android:paddingHorizontal="24dp"
-        android:paddingVertical="40dp">
+        android:paddingVertical="48dp">
 
         <!-- Logo -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_marginBottom="20dp"
-            app:cardBackgroundColor="@color/login_primary_action"
-            app:cardCornerRadius="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="16dp"
+            app:cardBackgroundColor="@color/primary"
+            app:cardCornerRadius="40dp"
             app:cardElevation="0dp">
 
             <TextView
@@ -31,34 +32,23 @@
                 android:gravity="center"
                 android:text="@string/corazon"
                 android:textColor="@color/white"
-                android:textSize="40sp" />
+                android:textSize="36sp" />
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Marca -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
             android:text="@string/titulo_app"
-            android:textColor="@color/login_brand"
+            android:textColor="@color/text_primary"
             android:textSize="26sp"
             android:textStyle="bold" />
 
-        <!-- Bienvenida -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="@string/login_bienvenido"
-            android:textColor="@color/login_welcome"
-            android:textSize="22sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
-            android:text="@string/login_ingresa_cuenta"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="36dp"
+            android:text="@string/login_subtitulo"
             android:textColor="@color/text_secondary"
             android:textSize="@dimen/texto_body" />
 
@@ -67,9 +57,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:letterSpacing="0.05"
             android:text="@string/hint_cedula_telefono"
-            android:textColor="@color/text_primary"
-            android:textSize="16sp"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/texto_label"
             android:textStyle="bold" />
 
         <EditText
@@ -78,36 +69,12 @@
             android:layout_height="@dimen/touch_min"
             android:background="@drawable/bg_input"
             android:hint="@string/login_placeholder_cedula"
+            android:importantForAutofill="no"
             android:inputType="number"
-            android:paddingHorizontal="16dp"
+            android:paddingHorizontal="20dp"
             android:textColor="@color/text_primary"
-            android:textColorHint="@color/login_placeholder"
-            android:textSize="@dimen/texto_body"
-            android:importantForAutofill="no" />
-
-        <!-- Campo: Contrasena -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/hint_contrasena"
-            android:textColor="@color/text_primary"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/txtPassword"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/touch_min"
-            android:background="@drawable/bg_input"
-            android:hint="@string/login_placeholder_password"
-            android:inputType="textPassword"
-            android:paddingHorizontal="16dp"
-            android:textColor="@color/text_primary"
-            android:textColorHint="@color/login_placeholder"
-            android:textSize="@dimen/texto_body"
-            android:importantForAutofill="no" />
+            android:textColorHint="@color/text_secondary"
+            android:textSize="@dimen/texto_body" />
 
         <!-- Boton principal INGRESAR -->
         <com.google.android.material.button.MaterialButton
@@ -115,31 +82,15 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/touch_min"
             android:layout_marginTop="20dp"
-            android:backgroundTint="@color/login_primary_action"
+            android:backgroundTint="@color/primary"
             android:text="@string/btn_ingresar"
+            android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/texto_body"
             android:textStyle="bold"
-            app:cornerRadius="14dp" />
+            app:cornerRadius="@dimen/radio_boton" />
 
-        <!-- Boton biometrico -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnHuella"
-            style="@style/Widget.Material3.Button.OutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/touch_min"
-            android:layout_marginTop="12dp"
-            android:backgroundTint="@color/white"
-            android:text="@string/btn_biometrico"
-            android:textColor="@color/text_primary"
-            android:textSize="@dimen/texto_body"
-            app:cornerRadius="14dp"
-            app:icon="@drawable/ic_fingerprint"
-            app:iconGravity="textStart"
-            app:iconTint="@color/text_primary"
-            app:strokeColor="@color/login_border" />
-
-        <!-- Separador "o" -->
+        <!-- Separador "O ingresa con" -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -151,13 +102,13 @@
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_weight="1"
-                android:background="@color/login_border" />
+                android:background="@color/border" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="16dp"
-                android:text="@string/login_o"
+                android:text="@string/login_o_ingresa_con"
                 android:textColor="@color/text_secondary"
                 android:textSize="@dimen/texto_label" />
 
@@ -165,22 +116,91 @@
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_weight="1"
-                android:background="@color/login_border" />
+                android:background="@color/border" />
         </LinearLayout>
 
-        <!-- Boton de registro (faltaba en la guia HTML) -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnIrRegistro"
-            style="@style/Widget.Material3.Button.OutlinedButton"
+        <!-- Biometria: Huella / Face ID -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/touch_min"
-            android:backgroundTint="@color/white"
-            android:text="@string/btn_crear_cuenta"
-            android:textColor="@color/login_brand"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/btnHuella"
+                android:layout_width="0dp"
+                android:layout_height="88dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_card"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="👆"
+                    android:textSize="28sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/btn_huella"
+                    android:textColor="@color/text_primary"
+                    android:textSize="@dimen/texto_label" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/btnFaceId"
+                android:layout_width="0dp"
+                android:layout_height="88dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_card"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🙂"
+                    android:textSize="28sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/btn_face_id"
+                    android:textColor="@color/text_primary"
+                    android:textSize="@dimen/texto_label" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Registro (no esta en el mockup, pero es necesario para crear cuenta) -->
+        <TextView
+            android:id="@+id/btnIrRegistro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="12dp"
+            android:text="@string/login_no_cuenta"
+            android:textColor="@color/primary_hover"
             android:textSize="@dimen/texto_body"
-            android:textStyle="bold"
-            app:cornerRadius="14dp"
-            app:strokeColor="@color/login_brand" />
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/login_footer"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/texto_label" />
 
     </LinearLayout>
 </ScrollView>

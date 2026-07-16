@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Widget.SaludContigo.Chip.Horario" parent="Widget.Material3.Chip.Filter">
+        <item name="chipBackgroundColor">@color/chip_bg_color</item>
+        <item name="chipStrokeWidth">0dp</item>
+        <item name="checkedIconVisible">false</item>
+        <item name="android:textColor">@color/chip_text_color</item>
+        <item name="android:textSize">@dimen/texto_body</item>
+        <item name="chipMinHeight">@dimen/touch_min</item>
+    </style>
+
+    <style name="DiaSemana">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">@dimen/texto_label</item>
+    </style>
+</resources>

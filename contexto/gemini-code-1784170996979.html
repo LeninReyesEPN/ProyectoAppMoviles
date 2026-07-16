@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Salud Contigo - Medical Booking System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="gemini-code-1784171001107.css">
+  <link rel="stylesheet" href="gemini-code-1784170990888.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <div class="app-showcase-container">
+    
+    <header class="app-header">
+      <div class="header-logo">
+        <div class="logo-icon"></div>
+        <h1>Salud Contigo</h1>
+      </div>
+      <div class="user-pill">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100" alt="Avatar" class="user-avatar">
+        <div class="user-meta">
+          <span class="user-name">Carlos Eduardo Ruiz</span>
+          <span class="user-tag">EPS Compensar</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="workspace-grid">
+
+      <!-- PANTALLA 1: INGRESO -->
+      <section class="mobile-frame" id="screen-login">
+        <div class="notch"></div>
+        <div class="screen-content login-content">
+          <div class="login-logo-container">
+            <div class="login-logo-icon">
+              <i data-lucide="heart" class="login-heart-inner"></i>
+            </div>
+            <h2 class="login-title">Salud Contigo</h2>
+            <p class="login-subtitle">Tu salud, paso a paso</p>
+          </div>
+
+          <div class="login-form">
+            <label class="input-label">NÚMERO DE CÉDULA O TELÉFONO</label>
+            <div class="input-with-icon">
+              <i data-lucide="user" class="input-icon"></i>
+              <input type="text" id="login-input" placeholder="1234567890" value="1234567890">
+            </div>
+
+            <button class="primary-btn-wide" id="btn-login-submit" onclick="handleLogin()">
+              Ingresar
+            </button>
+          </div>
+
+          <div class="login-alternative">
+            <span class="alternative-divider">O ingresa con</span>
+            <div class="login-options-grid">
+              <div class="login-option-card" onclick="handleBiometric('Huella')">
+                <i data-lucide="fingerprint" class="biometric-icon"></i>
+                <span>Huella</span>
+              </div>
+              <div class="login-option-card" onclick="handleBiometric('Face ID')">
+                <i data-lucide="scan-face" class="biometric-icon"></i>
+                <span>Face ID</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="login-footer">
+            <span>Acceso seguro y privado - v2.1.0</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- PANTALLA 2: INICIO -->
+      <section class="mobile-frame" id="screen-home">
+        <div class="notch"></div>
+        <div class="screen-content">
+          <div class="screen-header">
+            <div>
+              <span class="greeting-sub">Buenos días,</span>
+              <h2 class="greeting-main">Carlos Eduardo <span class="wave-hand">👋</span></h2>
+            </div>
+            <button class="icon-btn-notification" onclick="alert('No tienes notificaciones pendientes.')">
+              <i data-lucide="bell"></i>
+              <span class="noti-badge"></span>
+            </button>
+          </div>
+
+          <div class="alert-box-upcoming">
+            <div class="alert-header">
+              <i data-lucide="calendar" class="alert-icon"></i>
+              <div>
+                <span class="alert-label">Próxima cita</span>
+                <p class="alert-value">Cardiología - Mañana 9:00 AM</p>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="section-title">¿QUÉ DESEAS HACER?</h3>
+
+          <div class="action-card active-action" onclick="switchTab('screen-booking')">
+            <div class="action-icon-wrapper">
+              <i data-lucide="plus-circle" class="action-icon"></i>
+            </div>
+            <div class="action-info">
+              <h4>Agendar Cita</h4>
+              <p>Nueva consulta médica</p>
+            </div>
+            <i data-lucide="chevron-right" class="action-arrow"></i>
+          </div>
+
+          <div class="action-card" onclick="switchTab('screen-my-appointments')">
+            <div class="action-icon-wrapper secondary-icon">
+              <i data-lucide="calendar-days" class="action-icon"></i>
+            </div>
+            <div class="action-info">
+              <h4>Mis Citas</h4>
+              <p>Ver citas agendadas</p>
+            </div>
+            <i data-lucide="chevron-right" class="action-arrow"></i>
+          </div>
+
+          <div class="quick-stats-grid">
+            <div class="stat-card">
+              <span class="stat-num" id="home-total-citas-badge">12</span>
+              <span class="stat-label">Citas totales</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-num">5</span>
+              <span class="stat-label">Este año</span>
+            </div>
+          </div>
+
+        </div>
+        <div class="phone-navbar">
+          <div class="nav-item active"><i data-lucide="home"></i><span>Inicio</span></div>
+          <div class="nav-item" onclick="switchTab('screen-my-appointments')"><i data-lucide="calendar"></i><span>Citas</span></div>
+          <div class="nav-item" onclick="switchTab('screen-profile')"><i data-lucide="user"></i><span>Perfil</span></div>
+        </div>
+      </section>
+
+      <!-- PANTALLA 3: SELECCIONA ESPECIALIDAD -->
+      <section class="mobile-frame" id="screen-booking">
+        <div class="notch"></div>
+        <div class="screen-content">
+          <div class="screen-header-back">
+            <button class="back-btn" onclick="switchTab('screen-home')"><i data-lucide="chevron-left"></i></button>
+            <div>
+              <span class="step-indicator">Paso 1 de 3</span>
+              <h2 class="step-title">Selecciona Especialidad</h2>
+            </div>
+          </div>
+
+          <div class="specialties-grid">
+            <div class="specialty-card active" onclick="selectSpecialty(this, 'Cardiología', 'Dr. Roberto Vargas')">
+              <div class="specialty-icon-container heart-icon">
+                <i data-lucide="heart"></i>
+              </div>
+              <div class="specialty-details">
+                <h4>Cardiología</h4>
+                <p>Dr. Roberto Vargas</p>
+              </div>
+            </div>
+
+            <div class="specialty-card" onclick="selectSpecialty(this, 'Medicina General', 'Dra. Lucía Morales')">
+              <div class="specialty-icon-container layers-icon">
+                <i data-lucide="layers"></i>
+              </div>
+              <div class="specialty-details">
+                <h4>Medicina General</h4>
+                <p>Dra. Lucía Morales</p>
+              </div>
+            </div>
+
+            <div class="specialty-card" onclick="selectSpecialty(this, 'Neumología', 'Dr. Andrés Castro')">
+              <div class="specialty-icon-container lung-icon">
+                <i data-lucide="wind"></i>
+              </div>
+              <div class="specialty-details">
+                <h4>Neumología</h4>
+                <p>Dr. Andrés Castro</p>
+              </div>
+            </div>
+
+            <div class="specialty-card" onclick="selectSpecialty(this, 'Neurología', 'Dra. Patricia León')">
+              <div class="specialty-icon-container brain-icon">
+                <i data-lucide="brain"></i>
+              </div>
+              <div class="specialty-details">
+                <h4>Neurología</h4>
+                <p>Dra. Patricia León</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="availability-alert">
+            <i data-lucide="clock" class="avail-clock"></i>
+            <div class="avail-details">
+              <h5>Disponibilidad Inmediata</h5>
+              <p>Hoy · Medicina General (2 horarios disponibles)</p>
+            </div>
+          </div>
+
+          <button class="primary-btn-wide" style="margin-top: 1.5rem;" onclick="switchTab('screen-date-time')">
+            Continuar a Fecha y Hora <i data-lucide="arrow-right" style="width: 16px; margin-left: 8px;"></i>
+          </button>
+        </div>
+        <div class="phone-navbar">
+          <div class="nav-item" onclick="switchTab('screen-home')"><i data-lucide="home"></i><span>Inicio</span></div>
+          <div class="nav-item active"><i data-lucide="calendar"></i><span>Citas</span></div>
+          <div class="nav-item" onclick="switchTab('screen-profile')"><i data-lucide="user"></i><span>Perfil</span></div>
+        </div>
+      </section>
+
+      <!-- PANTALLA 4: FECHA Y HORA -->
+      <section class="mobile-frame" id="screen-date-time">
+        <div class="notch"></div>
+        <div class="screen-content">
+          <div class="screen-header-back">
+            <button class="back-btn" onclick="switchTab('screen-booking')"><i data-lucide="chevron-left"></i></button>
+            <div>
+              <span class="step-indicator">Paso 2 de 3</span>
+              <h2 class="step-title">Fecha y Hora</h2>
+            </div>
+          </div>
+
+          <div class="calendar-container">
+            <div class="calendar-header">
+              <button class="cal-nav-btn"><i data-lucide="chevron-left"></i></button>
+              <span class="calendar-month-year">Julio 2025</span>
+              <button class="cal-nav-btn"><i data-lucide="chevron-right"></i></button>
+            </div>
+            <div class="calendar-weekdays">
+              <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span>
+            </div>
+            <div class="calendar-days-grid" id="calendar-days">
+              <span class="day empty"></span>
+              <span class="day" onclick="selectCalendarDay(this, 1)">1</span>
+              <span class="day" onclick="selectCalendarDay(this, 2)">2</span>
+              <span class="day" onclick="selectCalendarDay(this, 3)">3</span>
+              <span class="day" onclick="selectCalendarDay(this, 4)">4</span>
+              <span class="day" onclick="selectCalendarDay(this, 5)">5</span>
+              <span class="day" onclick="selectCalendarDay(this, 6)">6</span>
+              <span class="day" onclick="selectCalendarDay(this, 7)">7</span>
+              <span class="day" onclick="selectCalendarDay(this, 8)">8</span>
+              <span class="day" onclick="selectCalendarDay(this, 9)">9</span>
+              <span class="day" onclick="selectCalendarDay(this, 10)">10</span>
+              <span class="day" onclick="selectCalendarDay(this, 11)">11</span>
+              <span class="day" onclick="selectCalendarDay(this, 12)">12</span>
+              <span class="day" onclick="selectCalendarDay(this, 13)">13</span>
+              <span class="day" onclick="selectCalendarDay(this, 14)">14</span>
+              <span class="day active" onclick="selectCalendarDay(this, 15)">15</span>
+              <span class="day" onclick="selectCalendarDay(this, 16)">16</span>
+              <span class="day" onclick="selectCalendarDay(this, 17)">17</span>
+              <span class="day" onclick="selectCalendarDay(this, 18)">18</span>
+              <span class="day" onclick="selectCalendarDay(this, 19)">19</span>
+              <span class="day" onclick="selectCalendarDay(this, 20)">20</span>
+              <span class="day" onclick="selectCalendarDay(this, 21)">21</span>
+              <span class="day" onclick="selectCalendarDay(this, 22)">22</span>
+              <span class="day" onclick="selectCalendarDay(this, 23)">23</span>
+              <span class="day" onclick="selectCalendarDay(this, 24)">24</span>
+              <span class="day" onclick="selectCalendarDay(this, 25)">25</span>
+              <span class="day" onclick="selectCalendarDay(this, 26)">26</span>
+              <span class="day" onclick="selectCalendarDay(this, 27)">27</span>
+              <span class="day" onclick="selectCalendarDay(this, 28)">28</span>
+              <span class="day" onclick="selectCalendarDay(this, 29)">29</span>
+              <span class="day" onclick="selectCalendarDay(this, 30)">30</span>
+              <span class="day" onclick="selectCalendarDay(this, 31)">31</span>
+            </div>
+          </div>
+
+          <h3 class="section-title">HORARIO DISPONIBLE</h3>
+          <div class="time-slots-grid" id="time-slots">
+            <span class="time-slot" onclick="selectTimeSlot(this, '7:00 AM')">7:00 AM</span>
+            <span class="time-slot" onclick="selectTimeSlot(this, '8:00 AM')">8:00 AM</span>
+            <span class="time-slot active" onclick="selectTimeSlot(this, '9:00 AM')">9:00 AM</span>
+            <span class="time-slot" onclick="selectTimeSlot(this, '10:00 AM')">10:00 AM</span>
+            <span class="time-slot" onclick="selectTimeSlot(this, '11:00 AM')">11:00 AM</span>
+            <span class="time-slot" onclick="selectTimeSlot(this, '2:00 PM')">2:00 PM</span>
+            <span class="time-slot" onclick="selectTimeSlot(this, '3:00 PM')">3:00 PM</span>
+            <span class="time-slot" onclick="selectTimeSlot(this, '4:00 PM')">4:00 PM</span>
+          </div>
+
+          <button class="primary-btn-wide" style="margin-top: 1.5rem;" onclick="switchTab('screen-confirmation')">
+            Continuar a Confirmar <i data-lucide="arrow-right" style="width: 16px; margin-left: 8px;"></i>
+          </button>
+        </div>
+        <div class="phone-navbar">
+          <div class="nav-item" onclick="switchTab('screen-home')"><i data-lucide="home"></i><span>Inicio</span></div>
+          <div class="nav-item active"><i data-lucide="calendar"></i><span>Citas</span></div>
+          <div class="nav-item" onclick="switchTab('screen-profile')"><i data-lucide="user"></i><span>Perfil</span></div>
+        </div>
+      </section>
+
+      <!-- PANTALLA 5: CONFIRMACIÓN -->
+      <section class="mobile-frame" id="screen-confirmation">
+        <div class="notch"></div>
+        <div class="screen-content">
+          <div class="screen-header-back">
+            <button class="back-btn" onclick="switchTab('screen-date-time')"><i data-lucide="chevron-left"></i></button>
+            <div>
+              <span class="step-indicator">Paso 3 de 3</span>
+              <h2 class="step-title">Confirmar Cita</h2>
+            </div>
+          </div>
+
+          <div class="doctor-summary-card">
+            <div class="doctor-heart-wrap">
+              <i data-lucide="heart" class="red-heart"></i>
+            </div>
+            <div class="doc-info">
+              <h3>Dr. Roberto Vargas</h3>
+              <span class="specialty-tag">Cardiología</span>
+            </div>
+          </div>
+
+          <div class="booking-summary-list">
+            <div class="summary-row">
+              <i data-lucide="calendar" class="summary-icon"></i>
+              <div class="summary-col">
+                <span class="summary-label">FECHA</span>
+                <span class="summary-val">Martes, 15 de Julio de 2025</span>
+              </div>
+            </div>
+
+            <div class="summary-row">
+              <i data-lucide="clock" class="summary-icon"></i>
+              <div class="summary-col">
+                <span class="summary-label">HORA</span>
+                <span class="summary-val">9:00 AM</span>
+              </div>
+            </div>
+
+            <div class="summary-row">
+              <i data-lucide="map-pin" class="summary-icon"></i>
+              <div class="summary-col">
+                <span class="summary-label">MODALIDAD</span>
+                <span class="summary-val">Presencial · Consultorio 204</span>
+              </div>
+            </div>
+
+            <div class="summary-row">
+              <i data-lucide="timer" class="summary-icon"></i>
+              <div class="summary-col">
+                <span class="summary-label">DURACIÓN APROX.</span>
+                <span class="summary-val">30 minutos</span>
+              </div>
+            </div>
+          </div>
+
+          <button class="primary-btn-wide" id="btn-confirm-trigger">
+            <i data-lucide="check" style="width: 18px; margin-right: 6px;"></i> Confirmar Cita
+          </button>
+        </div>
+        
+        <div class="phone-navbar">
+          <div class="nav-item" onclick="switchTab('screen-home')"><i data-lucide="home"></i><span>Inicio</span></div>
+          <div class="nav-item active"><i data-lucide="calendar"></i><span>Citas</span></div>
+          <div class="nav-item" onclick="switchTab('screen-profile')"><i data-lucide="user"></i><span>Perfil</span></div>
+        </div>
+      </section>
+
+      <!-- PANTALLA 6: ÉXITO -->
+      <section class="mobile-frame" id="screen-success">
+        <div class="notch"></div>
+        <div class="screen-content success-content">
+          <div class="success-checkmark-wrapper">
+            <div class="checkmark-circle">
+              <i data-lucide="check" class="success-icon"></i>
+            </div>
+          </div>
+          <h2>¡Cita Agendada!</h2>
+          <p>Tu cita con el <strong id="success-doctor-name">Dr. Roberto Vargas</strong> ha sido confirmada con éxito.</p>
+          
+          <div class="receipt-card">
+            <div class="receipt-row"><span>Especialidad</span><strong id="success-specialty">Cardiología</strong></div>
+            <div class="receipt-row"><span>Fecha</span><strong id="success-date">Martes, 15 Julio 2025</strong></div>
+            <div class="receipt-row"><span>Hora</span><strong id="success-time">9:00 AM</strong></div>
+          </div>
+
+          <button class="primary-btn-wide" onclick="goToHomeFromSuccess()">Volver al Inicio</button>
+        </div>
+      </section>
+
+      <!-- PANTALLA 7: MIS CITAS -->
+      <section class="mobile-frame" id="screen-my-appointments">
+        <div class="notch"></div>
+        <div class="screen-content">
+          <div class="screen-header">
+            <div>
+              <span class="greeting-sub">Mis Citas</span>
+              <h2 class="greeting-main">3 citas agendadas</h2>
+            </div>
+          </div>
+
+          <div class="toggle-tabs">
+            <div class="tab active" onclick="toggleAppointmentsTab(this, 'proximas')">Próximas</div>
+            <div class="tab" onclick="toggleAppointmentsTab(this, 'pasadas')">Pasadas</div>
+          </div>
+
+          <div class="appointments-vertical-list">
+            <!-- Dynamically populated by JavaScript -->
+          </div>
+
+        </div>
+        <div class="phone-navbar">
+          <div class="nav-item" onclick="switchTab('screen-home')"><i data-lucide="home"></i><span>Inicio</span></div>
+          <div class="nav-item active"><i data-lucide="calendar"></i><span>Citas</span></div>
+          <div class="nav-item" onclick="switchTab('screen-profile')"><i data-lucide="user"></i><span>Perfil</span></div>
+        </div>
+      </section>
+
+      <!-- PANTALLA 8: MI PERFIL -->
+      <section class="mobile-frame" id="screen-profile">
+        <div class="notch"></div>
+        <div class="screen-content">
+          <div class="screen-header">
+            <div>
+              <span class="greeting-sub">Mi Perfil</span>
+            </div>
+          </div>
+
+          <div class="user-profile-card">
+            <div class="profile-avatar-wrapper">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100" alt="Avatar" class="profile-large-avatar">
+            </div>
+            <div class="profile-details">
+              <h3>Carlos Eduardo Ruiz</h3>
+              <p class="profile-id">C.C. 19.456.789 · 71 años</p>
+              <span class="profile-eps-badge">EPS Compensar</span>
+            </div>
+          </div>
+
+          <div class="profile-stats-grid">
+            <div class="stat-card">
+              <span class="stat-num" id="profile-total-citas">12</span>
+              <span class="stat-label">Citas totales</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-num">5</span>
+              <span class="stat-label">Este año</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-num" id="profile-next-date">Jul 15</span>
+              <span class="stat-label">Próxima cita</span>
+            </div>
+          </div>
+
+          <div class="profile-options-list">
+            <div class="profile-option-row" onclick="alert('Notificaciones configuradas correctamente.')">
+              <div class="option-icon-wrap opt-bell">
+                <i data-lucide="bell"></i>
+              </div>
+              <div class="option-info">
+                <h4>Notificaciones</h4>
+                <p>Recordatorios de citas</p>
+              </div>
+              <i data-lucide="chevron-right" class="option-arrow"></i>
+            </div>
+
+            <div class="profile-option-row" onclick="alert('Cargando historial médico completo...')">
+              <div class="option-icon-wrap opt-medical">
+                <i data-lucide="file-text"></i>
+              </div>
+              <div class="option-info">
+                <h4>Historial Médico</h4>
+                <p>Ver historial completo</p>
+              </div>
+              <i data-lucide="chevron-right" class="option-arrow"></i>
+            </div>
+
+            <div class="profile-option-row" onclick="alert('Contacto de cuidador: Carlos Eduardo (Hijo) - Cel: 312 345 6789')">
+              <div class="option-icon-wrap opt-users">
+                <i data-lucide="users"></i>
+              </div>
+              <div class="option-info">
+                <h4>Cuidador de Apoyo</h4>
+                <p>Carlos Eduardo (hijo)</p>
+              </div>
+              <i data-lucide="chevron-right" class="option-arrow"></i>
+            </div>
+          </div>
+        </div>
+        <div class="phone-navbar">
+          <div class="nav-item" onclick="switchTab('screen-home')"><i data-lucide="home"></i><span>Inicio</span></div>
+          <div class="nav-item" onclick="switchTab('screen-my-appointments')"><i data-lucide="calendar"></i><span>Citas</span></div>
+          <div class="nav-item active"><i data-lucide="user"></i><span>Perfil</span></div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script>
+    // Global state object
+    const AppState = {
+      currentUser: {
+        name: "Carlos Eduardo Ruiz",
+        id: "C.C. 19.456.789 · 71 años",
+        eps: "EPS Compensar"
+      },
+      selectedSpecialty: "Cardiología",
+      selectedDoctor: "Dr. Roberto Vargas",
+      selectedDay: 15,
+      selectedTime: "9:00 AM",
+      appointments: [
+        {
+          doctor: "Dr. Roberto Vargas",
+          specialty: "Cardiología",
+          date: "Martes 15 Jul",
+          time: "9:00 AM",
+          status: "Próxima",
+          type: "heart"
+        },
+        {
+          doctor: "Dra. Lucía Morales",
+          specialty: "Medicina General",
+          date: "Miércoles 23 Jul",
+          time: "10:00 AM",
+          status: "Agendada",
+          type: "layers"
+        },
+        {
+          doctor: "Dr. Andrés Castro",
+          specialty: "Neumología",
+          date: "Lunes 28 Jul",
+          time: "3:00 PM",
+          status: "Agendada",
+          type: "wind"
+        }
+      ]
+    };
+
+    // Simple screen router state toggler
+    function switchTab(screenId) {
+      document.querySelectorAll('.mobile-frame').forEach(frame => {
+        frame.classList.remove('focused-screen');
+        if (frame.id === screenId) {
+          frame.classList.add('focused-screen');
+        }
+      });
+      const targetFrame = document.getElementById(screenId);
+      if (targetFrame) {
+        targetFrame.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    }
+
+    // Handles simulation of biometric logins (Huella / Face ID)
+    function handleBiometric(type) {
+      alert("Autenticación con " + type + " exitosa.");
+      handleLogin();
+    }
+
+    // Handles standard form login submit
+    function handleLogin() {
+      switchTab('screen-home');
+    }
+
+    // Selecting specialty card
+    function selectSpecialty(element, name, doctor) {
+      document.querySelectorAll('#screen-booking .specialty-card').forEach(card => {
+        card.classList.remove('active');
+      });
+      element.classList.add('active');
+      AppState.selectedSpecialty = name;
+      AppState.selectedDoctor = doctor;
+      
+      updateConfirmationUI();
+    }
+
+    // Selecting calendar day
+    function selectCalendarDay(element, day) {
+      document.querySelectorAll('#calendar-days .day').forEach(el => {
+        el.classList.remove('active');
+      });
+      element.classList.add('active');
+      AppState.selectedDay = day;
+      
+      updateConfirmationUI();
+    }
+
+    // Selecting time slot
+    function selectTimeSlot(element, time) {
+      document.querySelectorAll('#time-slots .time-slot').forEach(el => {
+        el.classList.remove('active');
+      });
+      element.classList.add('active');
+      AppState.selectedTime = time;
+      
+      updateConfirmationUI();
+    }
+
+    // Updates all texts in screen-confirmation dynamically
+    function updateConfirmationUI() {
+      const docNameEl = document.querySelector('#screen-confirmation .doc-info h3');
+      const docSpecialtyEl = document.querySelector('#screen-confirmation .specialty-tag');
+      if (docNameEl) docNameEl.textContent = AppState.selectedDoctor;
+      if (docSpecialtyEl) docSpecialtyEl.textContent = AppState.selectedSpecialty;
+
+      const iconWrap = document.querySelector('#screen-confirmation .doctor-heart-wrap');
+      if (iconWrap) {
+        iconWrap.className = 'doctor-heart-wrap';
+        const heartIcon = iconWrap.querySelector('i');
+        
+        if (AppState.selectedSpecialty === 'Cardiología') {
+          iconWrap.style.background = 'rgba(255, 59, 48, 0.15)';
+          if (heartIcon) {
+            heartIcon.style.color = 'var(--danger)';
+            heartIcon.style.fill = 'var(--danger)';
+          }
+        } else if (AppState.selectedSpecialty === 'Medicina General') {
+          iconWrap.style.background = 'rgba(0, 242, 194, 0.15)';
+          if (heartIcon) {
+            heartIcon.style.color = 'var(--accent)';
+            heartIcon.style.fill = 'none';
+          }
+        } else if (AppState.selectedSpecialty === 'Neumología') {
+          iconWrap.style.background = 'rgba(0, 158, 134, 0.15)';
+          if (heartIcon) {
+            heartIcon.style.color = 'var(--primary-hover)';
+            heartIcon.style.fill = 'none';
+          }
+        } else {
+          iconWrap.style.background = 'rgba(163, 184, 181, 0.15)';
+          if (heartIcon) {
+            heartIcon.style.color = '#fff';
+            heartIcon.style.fill = 'none';
+          }
+        }
+      }
+
+      const summaryVals = document.querySelectorAll('#screen-confirmation .summary-val');
+      if (summaryVals.length >= 2) {
+        summaryVals[0].textContent = `Martes, ${AppState.selectedDay} de Julio de 2025`;
+        summaryVals[1].textContent = AppState.selectedTime;
+      }
+    }
+
+    // Handles final booking click
+    function handleBookingConfirm() {
+      const newAppt = {
+        doctor: AppState.selectedDoctor,
+        specialty: AppState.selectedSpecialty,
+        date: `Martes ${AppState.selectedDay} Jul`,
+        time: AppState.selectedTime,
+        status: "Próxima",
+        type: AppState.selectedSpecialty === 'Cardiología' ? 'heart' :
+              AppState.selectedSpecialty === 'Medicina General' ? 'layers' :
+              AppState.selectedSpecialty === 'Neumología' ? 'wind' : 'brain'
+      };
+      
+      AppState.appointments.unshift(newAppt);
+
+      document.getElementById('success-doctor-name').textContent = AppState.selectedDoctor;
+      document.getElementById('success-specialty').textContent = AppState.selectedSpecialty;
+      document.getElementById('success-date').textContent = `Martes, ${AppState.selectedDay} Julio 2025`;
+      document.getElementById('success-time').textContent = AppState.selectedTime;
+
+      renderAppointments('proximas');
+
+      // Update home stats badge
+      document.getElementById('home-total-citas-badge').textContent = AppState.appointments.length;
+
+      // Update profile stats
+      document.getElementById('profile-total-citas').textContent = AppState.appointments.length;
+      document.getElementById('profile-next-date').textContent = `Jul ${AppState.selectedDay}`;
+
+      switchTab('screen-success');
+    }
+
+    // Renders the appointments in screen-my-appointments
+    function renderAppointments(filter = 'proximas') {
+      const apptListContainer = document.querySelector('#screen-my-appointments .appointments-vertical-list');
+      const countHeader = document.querySelector('#screen-my-appointments .greeting-main');
+      if (!apptListContainer) return;
+
+      apptListContainer.innerHTML = '';
+      
+      let filtered = [];
+      if (filter === 'proximas') {
+        filtered = AppState.appointments.filter(appt => appt.status !== 'Pasada');
+        if (countHeader) countHeader.textContent = `${filtered.length} citas agendadas`;
+      } else {
+        filtered = AppState.appointments.filter(appt => appt.status === 'Pasada');
+        if (filtered.length === 0) {
+          filtered = [
+            {
+              doctor: "Dra. Lucía Morales",
+              specialty: "Medicina General",
+              date: "Lunes 10 Jun",
+              time: "8:00 AM",
+              status: "Pasada",
+              type: "layers"
+            }
+          ];
+        }
+        if (countHeader) countHeader.textContent = `${filtered.length} citas pasadas`;
+      }
+
+      filtered.forEach(appt => {
+        const card = document.createElement('div');
+        card.className = 'appt-card';
+
+        let badgeClass = 'general-mini';
+        let iconName = 'layers';
+        if (appt.type === 'heart') { badgeClass = 'red-heart-mini'; iconName = 'heart'; }
+        if (appt.type === 'wind') { badgeClass = 'lung-mini'; iconName = 'wind'; }
+        if (appt.type === 'brain') { badgeClass = 'general-mini'; iconName = 'brain'; }
+
+        const pillClass = appt.status === 'Próxima' ? 'active-pill' : 
+                         appt.status === 'Agendada' ? 'scheduled-pill' : 'past-pill';
+
+        card.innerHTML = `
+          <div class="appt-header">
+            <div class="doctor-badge ${badgeClass}"><i data-lucide="${iconName}"></i></div>
+            <div class="appt-doc-meta">
+              <h4>${appt.doctor}</h4>
+              <p>${appt.specialty}</p>
+            </div>
+            <span class="status-pill ${pillClass}">${appt.status}</span>
+          </div>
+          <div class="appt-footer-meta">
+            <div class="meta-item"><i data-lucide="calendar"></i> ${appt.date}</div>
+            <div class="meta-item"><i data-lucide="clock"></i> ${appt.time}</div>
+          </div>
+        `;
+        apptListContainer.appendChild(card);
+      });
+
+      lucide.createIcons();
+    }
+
+    function toggleAppointmentsTab(element, filterType) {
+      document.querySelectorAll('#screen-my-appointments .toggle-tabs .tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      element.classList.add('active');
+      renderAppointments(filterType);
+    }
+
+    function goToHomeFromSuccess() {
+      switchTab('screen-home');
+    }
+
+    // Set initial active screen view
+    document.addEventListener("DOMContentLoaded", function() {
+      switchTab('screen-login');
+      lucide.createIcons();
+      renderAppointments('proximas');
+
+      const confirmBtn = document.getElementById('btn-confirm-trigger');
+      if (confirmBtn) {
+        confirmBtn.addEventListener('click', handleBookingConfirm);
+      }
+    });
+  </script>
+</body>
+</html>

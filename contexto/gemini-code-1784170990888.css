@@ -1,0 +1,1186 @@
+/* ==========================================================================
+   1. VARIABLES & BASE SYSTEM
+   ========================================================================== */
+:root {
+  --bg-darkest: #061d18;
+  --bg-app: #0A3429;
+  --bg-card: #104739;
+  --bg-card-selected: #1b5b4a;
+  --bg-input: #08201a;
+  --primary: #22997C;
+  --primary-hover: #2cbda9;
+  --accent: #00f2c2;
+  --accent-muted: #70928e;
+  --text-primary: #ffffff;
+  --text-secondary: #a3b8b5;
+  --danger: #ff4b4b;
+  
+  --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+  --radius-pill: 9999px;
+  --shadow-subtle: 0 8px 30px rgba(0, 0, 0, 0.4);
+  --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-darkest);
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  overflow-x: hidden;
+}
+
+/* ==========================================================================
+   2. DESKTOP INTERFACE WRAPPER (Showcase Container)
+   ========================================================================== */
+.app-showcase-container {
+  width: 100%;
+  max-width: 1400px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 242, 194, 0.1);
+  padding-bottom: 1.5rem;
+}
+
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logo-icon {
+  width: 36px;
+  height: 36px;
+  background-color: var(--accent);
+  border-radius: var(--radius-sm);
+  mask: radial-gradient(circle, transparent 30%, black 35%);
+  -webkit-mask: radial-gradient(circle, transparent 20%, black 25%);
+  background-image: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+}
+
+.header-logo h1 {
+  font-size: 24px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.5px;
+}
+
+.user-pill {
+  background: var(--bg-card);
+  padding: 6px 16px 6px 6px;
+  border-radius: var(--radius-pill);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.user-tag {
+  font-size: 10px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+   3. RESPONSIVE MOBILE MULTI-VIEWPORT WRAPPER
+   ========================================================================== */
+.workspace-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   4. DEVICE CHASSIS (THE "MOBILE SCREEN")
+   ========================================================================== */
+.mobile-frame {
+  background: var(--bg-app);
+  aspect-ratio: 9/19.5;
+  border-radius: 40px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-subtle), 0 0 0 8px rgba(255, 255, 255, 0.03);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(0, 242, 194, 0.15);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  opacity: 0.5;
+  filter: grayscale(40%);
+}
+
+.mobile-frame.focused-screen {
+  opacity: 1;
+  filter: none;
+  transform: scale(1.02);
+  box-shadow: var(--shadow-subtle), 0 0 0 8px rgba(0, 242, 194, 0.12), 0 20px 40px rgba(0,0,0,0.6);
+}
+
+/* Status Notch simulation */
+.notch {
+  width: 130px;
+  height: 24px;
+  background: #000000;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.screen-content {
+  flex: 1;
+  padding: 44px 20px 72px 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Hide scrollbars inside mobile preview */
+.screen-content::-webkit-scrollbar {
+  display: none;
+}
+
+/* ==========================================================================
+   5. COMPONENT: HEADER BAR & BUTTONS
+   ========================================================================== */
+.screen-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.greeting-sub {
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.greeting-main {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: 2px;
+}
+
+.icon-btn-notification {
+  background: var(--bg-card);
+  border: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  cursor: pointer;
+  position: relative;
+}
+
+.noti-badge {
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+/* Screen Headers with Back Navigation */
+.screen-header-back {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 10px;
+  margin-bottom: 24px;
+}
+
+.back-btn {
+  background: var(--bg-card);
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.step-indicator {
+  font-size: 11px;
+  color: var(--accent);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.step-title {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   6. COMPONENT: CARDS & MODULES
+   ========================================================================== */
+.alert-box-upcoming {
+  background: var(--bg-card-selected);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  margin-bottom: 24px;
+}
+
+.alert-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.alert-icon {
+  color: var(--accent);
+  width: 20px;
+}
+
+.alert-label {
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+.alert-value {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.section-title {
+  font-size: 11px;
+  color: var(--text-secondary);
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+/* Action Trigger Cards */
+.action-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  margin-bottom: 14px;
+  transition: var(--transition);
+}
+
+.action-card:hover, .action-card.active-action {
+  background: var(--bg-card-selected);
+  border-color: rgba(0, 242, 194, 0.2);
+}
+
+.action-icon-wrapper {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(0, 158, 134, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-icon {
+  color: var(--accent);
+}
+
+.action-info {
+  flex: 1;
+}
+
+.action-info h4 {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.action-info p {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.action-arrow {
+  color: var(--text-secondary);
+  width: 18px;
+}
+
+/* Grid & Metrics */
+.quick-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.stat-card {
+  background: var(--bg-card);
+  padding: 16px;
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+
+.stat-num {
+  display: block;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.stat-label {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   7. COMPONENT: SPECIALTIES & TIMINGS
+   ========================================================================== */
+.specialties-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.specialty-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.specialty-card.active {
+  background: var(--bg-card-selected);
+  border-color: var(--accent);
+}
+
+.specialty-icon-container {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.heart-icon { background: rgba(255, 59, 48, 0.15); color: var(--danger); }
+.layers-icon { background: rgba(0, 242, 194, 0.15); color: var(--accent); }
+.lung-icon { background: rgba(0, 158, 134, 0.15); color: var(--primary-hover); }
+.brain-icon { background: rgba(163, 184, 181, 0.15); color: #fff; }
+
+.specialty-details h4 {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.specialty-details p {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.availability-alert {
+  background: rgba(0, 158, 134, 0.1);
+  border: 1px dashed rgba(0, 242, 194, 0.3);
+  padding: 12px;
+  border-radius: var(--radius-md);
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.avail-clock { color: var(--accent); width: 18px; }
+.avail-details h5 { font-size: 12px; font-weight: 600; }
+.avail-details p { font-size: 11px; color: var(--text-secondary); }
+
+/* ==========================================================================
+   8. COMPONENT: CONFIRMATION & SUMMARY STYLES
+   ========================================================================== */
+.doctor-summary-card {
+  background: var(--bg-card-selected);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.doctor-heart-wrap {
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 59, 48, 0.15);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.red-heart { color: var(--danger); fill: var(--danger); }
+
+.doc-info h3 { font-size: 15px; font-weight: 700; }
+.specialty-tag {
+  font-size: 11px;
+  color: var(--danger);
+  background: rgba(255, 59, 48, 0.1);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  display: inline-block;
+  margin-top: 4px;
+}
+
+.booking-summary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: var(--bg-card);
+  padding: 16px;
+  border-radius: var(--radius-lg);
+  margin-bottom: 24px;
+}
+
+.summary-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.summary-icon {
+  color: var(--accent);
+  width: 18px;
+  margin-top: 2px;
+}
+
+.summary-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.summary-label {
+  font-size: 10px;
+  color: var(--text-secondary);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.summary-val {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   9. COMPONENT: SYSTEM BUTTONS
+   ========================================================================== */
+.primary-btn-wide {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  padding: 14px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  transition: var(--transition);
+}
+
+.primary-btn-wide:hover {
+  background: var(--primary-hover);
+}
+
+/* ==========================================================================
+   10. INTERACTIVE SUCCESS MODAL/OVERLAY
+   ========================================================================== */
+.success-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--bg-app);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 24px;
+  text-align: center;
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.success-overlay.active {
+  transform: translateY(0);
+}
+
+.success-checkmark-wrapper {
+  margin-bottom: 24px;
+}
+
+.checkmark-circle {
+  width: 72px;
+  height: 72px;
+  background: rgba(0, 242, 194, 0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--accent);
+}
+
+.success-icon {
+  color: var(--accent);
+  width: 36px;
+  height: 36px;
+}
+
+.success-overlay h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.success-overlay p {
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.receipt-card {
+  background: var(--bg-card);
+  width: 100%;
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-bottom: 30px;
+}
+
+.receipt-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.receipt-row:last-child {
+  border-bottom: none;
+}
+
+.receipt-row span { color: var(--text-secondary); }
+.receipt-row strong { color: #fff; }
+
+/* ==========================================================================
+   11. COMPONENT: TAB SYSTEM (MY APPOINTMENTS)
+   ========================================================================== */
+.toggle-tabs {
+  background: var(--bg-card);
+  display: flex;
+  padding: 4px;
+  border-radius: 10px;
+  margin-bottom: 18px;
+}
+
+.toggle-tabs .tab {
+  flex: 1;
+  text-align: center;
+  padding: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--text-secondary);
+}
+
+.toggle-tabs .tab.active {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* Vertical Appointments Stack */
+.appointments-vertical-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.appt-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: 14px;
+}
+
+.appt-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 12px;
+  margin-bottom: 10px;
+}
+
+.doctor-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.red-heart-mini { background: rgba(255, 59, 48, 0.1); color: var(--danger); }
+.general-mini { background: rgba(0, 242, 194, 0.1); color: var(--accent); }
+.lung-mini { background: rgba(0, 158, 134, 0.1); color: var(--primary-hover); }
+
+.appt-doc-meta {
+  flex: 1;
+}
+
+.appt-doc-meta h4 { font-size: 13px; font-weight: 600; }
+.appt-doc-meta p { font-size: 11px; color: var(--text-secondary); }
+
+.status-pill {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+}
+
+.active-pill {
+  background: rgba(0, 242, 194, 0.15);
+  color: var(--accent);
+}
+
+.scheduled-pill {
+  background: rgba(0, 158, 134, 0.15);
+  color: var(--primary-hover);
+}
+
+.appt-footer-meta {
+  display: flex;
+  gap: 16px;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.meta-item svg {
+  width: 12px;
+  color: var(--accent);
+}
+
+/* ==========================================================================
+   12. STICKY PHONE NAVBAR
+   ========================================================================== */
+.phone-navbar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: #011d19;
+  border-top: 1px solid rgba(0, 242, 194, 0.1);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-bottom: 8px; /* Safe area space mock */
+  z-index: 10;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.nav-item svg {
+  width: 20px;
+}
+
+.nav-item.active {
+  color: var(--accent);
+}
+
+/* ==========================================================================
+   13. SCREEN 1: LOGIN / INGRESO
+   ========================================================================== */
+.login-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+  padding: 60px 10px 40px 10px;
+}
+
+.login-logo-container {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.login-logo-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  background: rgba(0, 242, 194, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px auto;
+  border: 1px solid rgba(0, 242, 194, 0.25);
+  box-shadow: 0 8px 24px rgba(0, 242, 194, 0.1);
+}
+
+.login-heart-inner {
+  color: var(--accent);
+  width: 30px;
+  height: 30px;
+  fill: var(--accent);
+}
+
+.login-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.login-subtitle {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.login-form {
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.input-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+}
+
+.input-with-icon {
+  position: relative;
+  width: 100%;
+}
+
+.input-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+  width: 18px;
+}
+
+.input-with-icon input {
+  width: 100%;
+  padding: 14px 14px 14px 44px;
+  background: var(--bg-input);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  color: #fff;
+  font-family: var(--font-family);
+  font-size: 13px;
+  transition: var(--transition);
+}
+
+.input-with-icon input:focus {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 242, 194, 0.15);
+}
+
+.login-alternative {
+  width: 100%;
+  margin-top: 24px;
+  text-align: center;
+}
+
+.alternative-divider {
+  font-size: 11px;
+  color: var(--text-secondary);
+  display: block;
+  margin-bottom: 14px;
+  position: relative;
+}
+
+.login-options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.login-option-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.login-option-card:hover {
+  background: var(--bg-card-selected);
+  border-color: rgba(0, 242, 194, 0.15);
+}
+
+.biometric-icon {
+  color: var(--accent);
+  width: 24px;
+  height: 24px;
+}
+
+.login-footer {
+  margin-top: auto;
+  padding-top: 20px;
+  font-size: 10px;
+  color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   14. SCREEN 4: CALENDAR & TIMINGS
+   ========================================================================== */
+.calendar-container {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 14px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.calendar-month-year {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.cal-nav-btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: var(--transition);
+}
+
+.cal-nav-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+}
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.calendar-weekdays span {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.calendar-days-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  text-align: center;
+}
+
+.day {
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.day:hover:not(.empty):not(.active) {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--accent);
+}
+
+.day.active {
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 0 12px rgba(34, 153, 124, 0.5);
+}
+
+.day.empty {
+  cursor: default;
+  pointer-events: none;
+}
+
+.time-slots-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.time-slot {
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: var(--radius-pill);
+  padding: 10px 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+  color: var(--text-secondary);
+}
+
+.time-slot:hover:not(.active) {
+  background: var(--bg-card-selected);
+  color: var(--text-primary);
+}
+
+.time-slot.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--accent);
+  box-shadow: 0 0 10px rgba(34, 153, 124, 0.3);
+}
+
+/* ==========================================================================
+   15. SCREEN 6: SUCCESS LAYOUT
+   ========================================================================== */
+.success-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 40px 10px;
+}
+
+/* ==========================================================================
+   16. SCREEN 8: PROFILE LAYOUT
+   ========================================================================== */
+.user-profile-card {
+  background: var(--bg-card-selected);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+  border: 1px solid rgba(0, 242, 194, 0.1);
+}
+
+.profile-avatar-wrapper {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--accent);
+}
+
+.profile-large-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.profile-details h3 {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.profile-id {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.profile-eps-badge {
+  font-size: 10px;
+  background: rgba(0, 242, 194, 0.12);
+  color: var(--accent);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  align-self: flex-start;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.profile-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.profile-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.profile-option-row {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: var(--transition);
+  border: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+.profile-option-row:hover {
+  background: var(--bg-card-selected);
+  border-color: rgba(0, 242, 194, 0.1);
+}
+
+.option-icon-wrap {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.opt-bell {
+  background: rgba(255, 193, 7, 0.12);
+  color: #ffc107;
+}
+
+.opt-medical {
+  background: rgba(255, 59, 48, 0.12);
+  color: var(--danger);
+}
+
+.opt-users {
+  background: rgba(0, 122, 255, 0.12);
+  color: #007aff;
+}
+
+.option-info {
+  flex: 1;
+}
+
+.option-info h4 {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.option-info p {
+  font-size: 10px;
+  color: var(--text-secondary);
+}
+
+.option-arrow {
+  color: var(--text-secondary);
+  width: 16px;
+}

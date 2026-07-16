@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_app"
+    android:orientation="vertical"
+    android:padding="24dp"
+    tools:context=".ui.miscitas.MisCitasFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/titulo_mis_citas"
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/texto_h1"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvContador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="20dp"
+        android:textColor="@color/text_secondary"
+        android:textSize="@dimen/texto_body"
+        tools:text="3 citas agendadas" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_card"
+        android:orientation="horizontal"
+        android:padding="4dp">
+
+        <TextView
+            android:id="@+id/tabProximas"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/touch_min"
+            android:layout_weight="1"
+            android:background="@drawable/bg_pill"
+            android:gravity="center"
+            android:text="@string/tab_proximas"
+            android:textColor="@color/white"
+            android:textSize="@dimen/texto_body"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tabPasadas"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/touch_min"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/tab_pasadas"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/texto_body"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvVacio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:textColor="@color/text_secondary"
+        android:textSize="@dimen/texto_body"
+        android:visibility="gone"
+        tools:text="No tienes citas próximas todavía" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCitas"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false" />
+
+</LinearLayout>

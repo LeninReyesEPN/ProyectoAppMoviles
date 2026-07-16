@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_app"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="32dp"
+    tools:context=".ui.booking.ExitoFragment">
+
+    <TextView
+        android:id="@+id/ivCheck"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/bg_circle_primary"
+        android:gravity="center"
+        android:text="✓"
+        android:textColor="@color/white"
+        android:textSize="48sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/exito_titulo"
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/texto_h1"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvMensaje"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:textColor="@color/text_secondary"
+        android:textSize="@dimen/texto_body"
+        tools:text="Tu cita con Dr. Roberto Vargas ha sido confirmada con éxito." />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/bg_card"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/exito_label_especialidad"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/texto_body" />
+
+            <TextView
+                android:id="@+id/tvReciboEspecialidad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/texto_body"
+                android:textStyle="bold"
+                tools:text="Cardiología" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/exito_label_fecha"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/texto_body" />
+
+            <TextView
+                android:id="@+id/tvReciboFecha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/texto_body"
+                android:textStyle="bold"
+                tools:text="Martes, 15 Julio 2025" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/exito_label_hora"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/texto_body" />
+
+            <TextView
+                android:id="@+id/tvReciboHora"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/texto_body"
+                android:textStyle="bold"
+                tools:text="9:00 AM" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnVolver"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/touch_min"
+        android:layout_marginTop="28dp"
+        android:backgroundTint="@color/primary"
+        android:text="@string/btn_volver_inicio"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/texto_body"
+        android:textStyle="bold"
+        app:cornerRadius="@dimen/radio_boton" />
+
+</LinearLayout>
