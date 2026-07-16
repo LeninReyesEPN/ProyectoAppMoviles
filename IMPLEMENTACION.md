@@ -77,7 +77,7 @@ com.example.saludcontigo
 ├── LoginActivity.kt          Pantalla de ingreso
 ├── RegistroActivity.kt       Pantalla de registro
 ├── MainActivity.kt           Host de Fragments + bottom nav
-├── Sesion.kt                 Puntero a la sesión activa (SharedPreferences)
+├── Sesion.kt                 Recuerda la cédula de la última cuenta usada en este dispositivo (SharedPreferences)
 ├── data/
 │   ├── local/                 ← Room
 │   │   ├── UserEntity.kt
@@ -103,8 +103,7 @@ com.example.saludcontigo
 │   │   └── AppointmentAdapter.kt   (RecyclerView)
 │   └── perfil/PerfilFragment.kt
 └── util/                      ← utilidades sin estado, sin dependencias de Android UI
-    ├── PasswordUtil.kt         Hash + verificacion de contrasenas (PBKDF2 + sal)
-    └── BiometricKeyManager.kt  Una clave de Android Keystore por cedula, para huella por usuario
+    └── PasswordUtil.kt         Hash + verificacion de contrasenas (PBKDF2 + sal)
 ```
 
 **Regla de capas:** los Fragments/Activities **nunca** llaman directo a un DAO de Room. Siempre pasan por un `Repository`. Esto es una buena práctica de arquitectura Android (separa "de dónde vienen los datos" de "cómo se muestran").
@@ -249,7 +248,7 @@ class AppointmentRepository(context: Context) {
 |---|---|
 | Se registra (`RegistroActivity`) | `UserRepository.registrar(...)` → `INSERT` en `usuarios` (con `passwordHash`/`passwordSalt` ya calculados) |
 | Ingresa con cédula + contraseña (`LoginActivity`) | `UserRepository.validarCredenciales(...)` → `SELECT` en `usuarios` + verificación del hash |
-| Ingresa con huella | `UserRepository.buscarPorCedula(...)` para revisar `huellaActiva`, y después de que `BiometricPrompt` confirma identidad con la clave de Keystore de esa cuenta |
+| Ingresa con huella | `UserRepository.buscarPorCedula(...)` para revisar `huellaActiva`, y después de que `BiometricPrompt` confirma identidad |
 | Activa/desactiva la huella (Mi Perfil) | `UserRepository.activarHuella(...)` / `desactivarHuella(...)` → `UPDATE huellaActiva` en `usuarios` |
 | Abre Inicio, Mis Citas o Perfil | `AppointmentRepository.obtenerCitasDe(cedula)` → `SELECT` reactivo (`Flow`) sobre `citas` |
 | Toca "Confirmar Cita" | `AppointmentRepository.agendar(...)` → `INSERT` en `citas` |
@@ -277,40 +276,29 @@ object PasswordUtil {
 - Única regla de validación: mínimo 4 caracteres, sin exigir mayúsculas/números/símbolos — se prioriza la baja fricción para adultos mayores (ver `BRAND.md`).
 - El botón de "ojito" (`btnTogglePassword`) alterna `EditText.inputType` entre `TYPE_TEXT_VARIATION_PASSWORD` y `TYPE_TEXT_VARIATION_VISIBLE_PASSWORD`, y cambia el ícono (`ic_eye` / `ic_eye_off`) y el `contentDescription`.
 
-### 6.2 Huella por usuario (`util/BiometricKeyManager.kt`)
+### 6.2 Huella (ligada a la cuenta del dispositivo, no criptográficamente por usuario)
 
-Se usa `androidx.biometric` (`BiometricManager` + `BiometricPrompt`), la API recomendada por Google para huella/reconocimiento biométrico, pero ahora **ligada a la cuenta**, no a "la última sesión guardada" como antes.
+Se usa `androidx.biometric` (`BiometricManager` + `BiometricPrompt`), la API recomendada por Google para huella/reconocimiento biométrico. Un `BiometricPrompt` simple, sin `CryptoObject`/Android Keystore — se probó primero una versión con una clave de Keystore por cédula (para "atar" criptográficamente la huella a la cuenta), pero en la práctica resultó poco confiable en equipos reales, así que se volvió a un `BiometricPrompt` plano, mucho más simple y estable.
 
-**El problema que resuelve:** Android no permite que una app distinga *cuál* dedo enrolado tocó el sensor — el sistema operativo solo confirma "hay una huella válida en este equipo". Así que la app no puede preguntarle al sensor "¿es la huella de Juan?". Lo que sí puede hacer (y es lo que se implementó) es exigir que:
-1. La cédula escrita en el campo de Login corresponda a una cuenta que existe, **y**
-2. Esa cuenta haya activado explícitamente el interruptor "Ingresar con huella" en Mi Perfil.
+**El límite real que hay que aceptar:** Android no permite que una app distinga *cuál* dedo enrolado tocó el sensor — el sistema operativo solo confirma "hay una huella válida en este equipo". La app no puede preguntarle al sensor "¿es la huella de Juan?", con o sin Keystore de por medio. Lo que sí controla la app es **a qué cuenta se entra** si la huella del equipo es válida:
 
-Si una segunda persona se registra con otra cédula en el mismo teléfono y nunca activa su propio interruptor de huella, no puede entrar tocando el sensor — el botón de huella de Login revisa `usuario.huellaActiva` antes de mostrar el prompt, y si es `false` avisa que esa cuenta no lo tiene activado.
+1. `Sesion.obtenerCedula(context)` — la cédula de la última cuenta que inició sesión **en este dispositivo** (ver `Sesion.kt` más abajo).
+2. Que esa cuenta tenga `huellaActiva = true` (activado desde el interruptor en Mi Perfil).
 
-**Cómo se liga técnicamente a la cuenta — una clave de Android Keystore por cédula:**
-
-```kotlin
-object BiometricKeyManager {
-    fun crearClave(cedula: String)         // AES/GCM en AndroidKeyStore, alias = "huella_<cedula>"
-    fun obtenerCipher(cedula: String): Cipher?
-    fun eliminarClave(cedula: String)
-}
-```
-
-La clave se crea con `setUserAuthenticationRequired(true)` (cada operación criptográfica exige biometría fresca) y `setInvalidatedByBiometricEnrollment(true)` (si cambian las huellas registradas en el equipo — se agrega o se borra una — la clave se invalida sola). El `Cipher` de esa clave se envuelve en un `BiometricPrompt.CryptoObject` y se exige `BIOMETRIC_STRONG` (obligatorio en Android para prompts basados en criptografía). Que `onAuthenticationSucceeded` se dispare ya prueba que la huella correcta desbloqueó **esa** clave puntual — no una clave genérica de la app.
+Si una segunda persona se registra con otra cédula en el mismo teléfono y nunca activa su propio interruptor de huella, no puede entrar tocando el sensor: el botón de huella de Login revisa `usuario.huellaActiva` antes de mostrar el prompt, y si es `false` avisa que esa cuenta no lo tiene activado. Lo que **no** se puede evitar (ninguna app puede) es que dos cuentas distintas, registradas en el mismo teléfono y ambas con la huella activada, entren usando el mismo dedo físico — esa distinción no existe en la plataforma.
 
 **Flujo para activar la huella (Mi Perfil → interruptor "Ingresar con huella"):**
-1. Revisa `BiometricManager.canAuthenticate(BIOMETRIC_STRONG)` — si el equipo no tiene sensor, avisa y el interruptor vuelve a apagado.
-2. `BiometricKeyManager.crearClave(cedula)` + arma el `Cipher`.
-3. Muestra el `BiometricPrompt` para confirmar que la huella real funciona.
-4. Si es exitoso → `UserRepository.activarHuella(cedula)` (`huellaActiva = true`). Si falla/cancela, el interruptor se revierte a apagado.
-5. Al desactivarlo: `UserRepository.desactivarHuella(cedula)` + `BiometricKeyManager.eliminarClave(cedula)` (se borra la clave del Keystore).
+1. Revisa `BiometricManager.canAuthenticate(BIOMETRIC_WEAK or DEVICE_CREDENTIAL)` — si el equipo no tiene sensor ni PIN/patrón, avisa y el interruptor vuelve a apagado.
+2. Muestra el `BiometricPrompt` para confirmar que la huella real funciona.
+3. Si es exitoso → `UserRepository.activarHuella(cedula)` (`huellaActiva = true`). Si falla/cancela, el interruptor se revierte a apagado (`revertirSwitchHuella`).
+4. Al desactivarlo: `UserRepository.desactivarHuella(cedula)`.
 
 **Flujo para ingresar con huella (`LoginActivity.intentarIngresoBiometrico()`):**
-1. Exige que el campo de cédula tenga texto (ya no depende de `Sesion.obtenerCedula`, que solo apuntaba a la última sesión).
+1. Lee `Sesion.obtenerCedula(this)` — si está vacía (nunca se inició sesión en este dispositivo), avisa que hay que entrar primero con cédula y contraseña.
 2. Busca esa cédula en Room; si no existe o `huellaActiva == false`, avisa que esa cuenta no tiene la huella activada.
-3. Arma el `Cipher` con `BiometricKeyManager.obtenerCipher(cedula)`. Si el equipo invalidó la clave (`KeyPermanentlyInvalidatedException`, porque cambiaron las huellas registradas), se desactiva `huellaActiva` automáticamente y se pide reactivarla desde Mi Perfil.
-4. Si el `Cipher` es válido, se muestra el `BiometricPrompt`; al autenticar con éxito, `Sesion.iniciarSesion(cedula)` y se entra a `MainActivity`.
+3. Muestra el `BiometricPrompt`; al autenticar con éxito, `Sesion.iniciarSesion(cedula)` y se entra a `MainActivity`.
+
+**Bug real que se encontró y corrigió durante las pruebas:** al principio, `Sesion.cerrarSesion(...)` borraba por completo la cédula guardada (`KEY_CEDULA`). Como el botón de huella depende exactamente de ese valor (paso 1 de arriba), cerrar sesión dejaba a la huella sin ninguna cuenta a la cual entrar — se rompía justo el caso de uso que debía funcionar ("activar huella → cerrar sesión → volver a entrar solo con huella"). La corrección: `cerrarSesion()` ya no borra la cédula, solo regresa a `LoginActivity`; ver `Sesion.kt` en la sección 4.
 
 Permiso necesario en `AndroidManifest.xml`: `android.permission.USE_BIOMETRIC` (ya estaba declarado).
 
@@ -397,8 +385,8 @@ Esto reproduce exactamente el comportamiento del mockup original de diseño.
 ### 9. Mi Perfil (`PerfilFragment` + `fragment_perfil.xml`)
 - Datos del usuario (`UserEntity`): nombre, cédula, edad.
 - Estadísticas (total de citas, citas de este año, próxima cita) calculadas desde el mismo `Flow` de citas.
-- **Menú hamburguesa** (`btnMenu`, ícono ☰ junto al título): abre un `PopupMenu` (`res/menu/menu_perfil.xml`) con la opción **Cerrar sesión**, que pide confirmación con un `AlertDialog` y, al confirmar, llama a `Sesion.cerrarSesion(...)` y regresa a `LoginActivity` limpiando el back stack (`FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK`).
-- **Interruptor "Ingresar con huella"** (`rowHuella`, usa `item_perfil_opcion_switch.xml` en vez de `item_perfil_opcion.xml`): activa/desactiva la huella para esta cuenta — ver sección 6.2 para el detalle completo del flujo con `BiometricKeyManager`.
+- **Interruptor "Ingresar con huella"** (`rowHuella`, usa `item_perfil_opcion_switch.xml` en vez de `item_perfil_opcion.xml`): activa/desactiva la huella para esta cuenta — ver sección 6.2 para el detalle completo del flujo.
+- **Cerrar sesión** (`rowCerrarSesion`, última fila de opciones, mismo `item_perfil_opcion.xml` que Notificaciones/Historial/Cuidador — no un menú aparte): pide confirmación con un `AlertDialog` y, al confirmar, llama a `Sesion.cerrarSesion(...)` y regresa a `LoginActivity` limpiando el back stack (`FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK`).
 - Opciones (Notificaciones, Historial Médico, Cuidador de Apoyo): por ahora son solo visuales — al tocarlas muestran un aviso de "próximamente", no están conectadas a ninguna función real todavía.
 
 ---
@@ -422,5 +410,5 @@ Todo el look & feel sigue `BRAND.md`: paleta oscura (`bg_app #0A3429`, tarjetas 
 - Las opciones de Perfil (Notificaciones, Historial, Cuidador) son solo visuales.
 - Los médicos y especialidades son un catálogo fijo en el código, no se pueden agregar nuevos desde la app.
 - No hay lógica para marcar automáticamente una cita como "Pasada" cuando su fecha ya venció (el estado se fija una sola vez al crearla, como `PROXIMA`).
-- **Límite real de la huella por usuario**: Android no expone una forma de saber *cuál* dedo enrolado tocó el sensor — solo confirma "hay una huella válida en este equipo". La app liga el ingreso biométrico a la cuenta escrita en el campo de cédula y a si esa cuenta activó su propio interruptor de huella (con una clave de Keystore por cédula, ver sección 6.2), pero **no puede impedir** que dos cuentas distintas, registradas en el mismo teléfono, ambas con la huella activada, entren usando el mismo dedo físico — esa distinción no existe en la plataforma.
+- **Límite real de la huella**: Android no expone una forma de saber *cuál* dedo enrolado tocó el sensor — solo confirma "hay una huella válida en este equipo". La app liga el ingreso biométrico a la cédula que inició sesión por última vez en este dispositivo (`Sesion.obtenerCedula`) y a si esa cuenta activó su propio interruptor de huella, pero **no puede impedir** que dos cuentas distintas, registradas en el mismo teléfono, ambas con la huella activada, entren usando el mismo dedo físico — esa distinción no existe en la plataforma. (Se probó una variante con una clave de Android Keystore por cédula para reforzar esto, pero resultó poco confiable en equipos reales y se descartó a favor de un `BiometricPrompt` simple — ver sección 6.2.)
 - Al subir `AppDatabase` de `version = 1` a `2` se usó `fallbackToDestructiveMigration(dropAllTables = true)` en vez de una migración manual: cualquier dato de prueba que ya estuviera instalado en un emulador/dispositivo se perdió con esta actualización.

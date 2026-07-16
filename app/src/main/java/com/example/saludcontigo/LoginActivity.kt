@@ -2,7 +2,6 @@ package com.example.saludcontigo
 
 import android.content.Intent
 import android.os.Bundle
-import android.security.keystore.KeyPermanentlyInvalidatedException
 import android.text.InputType
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -12,7 +11,6 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.saludcontigo.data.repository.UserRepository
 import com.example.saludcontigo.databinding.ActivityLoginBinding
-import com.example.saludcontigo.util.BiometricKeyManager
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
@@ -78,19 +76,24 @@ class LoginActivity : AppCompatActivity() {
     }
 
     /**
-     * La huella ahora esta ligada a la cedula escrita en el campo, no a la ultima sesion
-     * guardada: solo funciona si esa cuenta existe y activo el interruptor de huella en
-     * Mi Perfil (ver BiometricKeyManager).
+     * La huella funciona para la cuenta que ya inicio sesion en este dispositivo
+     * (Sesion.obtenerCedula) y que activo el interruptor en Mi Perfil. Se usa un
+     * BiometricPrompt simple (sin CryptoObject/Keystore): Android no permite de todas
+     * formas distinguir que dedo enrolado toco el sensor, y atar la huella a una clave
+     * criptografica por cedula resulto poco confiable en varios equipos.
      */
     private fun intentarIngresoBiometrico() {
-        val cedula = binding.txtCedula.text?.toString().orEmpty().trim()
+        val cedula = Sesion.obtenerCedula(this)
         if (cedula.isBlank()) {
             Toast.makeText(this, getString(R.string.biometria_sin_sesion), Toast.LENGTH_LONG).show()
             return
         }
 
         val gestor = BiometricManager.from(this)
-        val puedeAutenticar = gestor.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)
+        val puedeAutenticar = gestor.canAuthenticate(
+            BiometricManager.Authenticators.BIOMETRIC_WEAK or
+                BiometricManager.Authenticators.DEVICE_CREDENTIAL
+        )
         if (puedeAutenticar != BiometricManager.BIOMETRIC_SUCCESS) {
             Toast.makeText(this, getString(R.string.biometria_no_disponible), Toast.LENGTH_LONG).show()
             return
@@ -106,21 +109,11 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this@LoginActivity, getString(R.string.biometria_cuenta_sin_huella), Toast.LENGTH_LONG).show()
                 return@launch
             }
-
-            val cipher = try {
-                BiometricKeyManager.obtenerCipher(cedula)
-            } catch (e: KeyPermanentlyInvalidatedException) {
-                userRepository.desactivarHuella(cedula)
-                Toast.makeText(this@LoginActivity, getString(R.string.biometria_clave_invalidada), Toast.LENGTH_LONG).show()
-                null
-            }
-            if (cipher == null) return@launch
-
-            mostrarPromptBiometrico(cedula, cipher)
+            mostrarPromptBiometrico(cedula)
         }
     }
 
-    private fun mostrarPromptBiometrico(cedula: String, cipher: javax.crypto.Cipher) {
+    private fun mostrarPromptBiometrico(cedula: String) {
         val prompt = BiometricPrompt(
             this,
             ContextCompat.getMainExecutor(this),
@@ -139,11 +132,13 @@ class LoginActivity : AppCompatActivity() {
         val info = BiometricPrompt.PromptInfo.Builder()
             .setTitle(getString(R.string.biometria_titulo))
             .setSubtitle(getString(R.string.biometria_subtitulo))
-            .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG)
-            .setNegativeButtonText(getString(R.string.dialogo_cancelar))
+            .setAllowedAuthenticators(
+                BiometricManager.Authenticators.BIOMETRIC_WEAK or
+                    BiometricManager.Authenticators.DEVICE_CREDENTIAL
+            )
             .build()
 
-        prompt.authenticate(info, BiometricPrompt.CryptoObject(cipher))
+        prompt.authenticate(info)
     }
 
     private fun irAHome() {

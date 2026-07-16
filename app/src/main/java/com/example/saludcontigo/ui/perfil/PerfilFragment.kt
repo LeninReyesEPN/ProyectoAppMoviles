@@ -2,11 +2,9 @@ package com.example.saludcontigo.ui.perfil
 
 import android.content.Intent
 import android.os.Bundle
-import android.security.keystore.KeyPermanentlyInvalidatedException
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.biometric.BiometricManager
@@ -23,7 +21,6 @@ import com.example.saludcontigo.data.local.EstadoCita
 import com.example.saludcontigo.data.repository.AppointmentRepository
 import com.example.saludcontigo.data.repository.UserRepository
 import com.example.saludcontigo.databinding.FragmentPerfilBinding
-import com.example.saludcontigo.util.BiometricKeyManager
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -55,7 +52,6 @@ class PerfilFragment : Fragment() {
         cedulaActual = Sesion.obtenerCedula(requireContext())
 
         configurarOpciones()
-        configurarMenu()
 
         viewLifecycleOwner.lifecycleScope.launch {
             val usuario = userRepository.buscarPorCedula(cedulaActual)
@@ -111,28 +107,17 @@ class PerfilFragment : Fragment() {
         binding.rowCuidador.tvTitulo.text = getString(R.string.opt_cuidador_titulo)
         binding.rowCuidador.tvSubtitulo.text = getString(R.string.opt_cuidador_subtitulo)
 
+        binding.rowCerrarSesion.tvIcono.text = "🚪"
+        binding.rowCerrarSesion.tvTitulo.text = getString(R.string.menu_cerrar_sesion)
+        binding.rowCerrarSesion.tvSubtitulo.text = getString(R.string.opt_cerrar_sesion_subtitulo)
+
         val avisarProximamente = View.OnClickListener {
             Toast.makeText(requireContext(), getString(R.string.opt_proximamente), Toast.LENGTH_SHORT).show()
         }
         binding.rowNotificaciones.root.setOnClickListener(avisarProximamente)
         binding.rowHistorial.root.setOnClickListener(avisarProximamente)
         binding.rowCuidador.root.setOnClickListener(avisarProximamente)
-    }
-
-    private fun configurarMenu() {
-        binding.btnMenu.setOnClickListener { anchor ->
-            val popup = PopupMenu(requireContext(), anchor)
-            popup.menuInflater.inflate(R.menu.menu_perfil, popup.menu)
-            popup.setOnMenuItemClickListener { item ->
-                if (item.itemId == R.id.itemCerrarSesion) {
-                    confirmarCerrarSesion()
-                    true
-                } else {
-                    false
-                }
-            }
-            popup.show()
-        }
+        binding.rowCerrarSesion.root.setOnClickListener { confirmarCerrarSesion() }
     }
 
     private fun confirmarCerrarSesion() {
@@ -152,10 +137,7 @@ class PerfilFragment : Fragment() {
         requireActivity().finish()
     }
 
-    /**
-     * El interruptor de huella queda ligado a esta cedula (ver BiometricKeyManager):
-     * activarlo crea/usa una clave de Keystore solo para esta cuenta.
-     */
+    /** El interruptor guarda huellaActiva=true/false solo para esta cedula en Room. */
     private fun configurarSwitchHuella(huellaActiva: Boolean) {
         actualizarSubtituloHuella(huellaActiva)
         binding.rowHuella.switchToggle.setOnCheckedChangeListener(null)
@@ -180,7 +162,6 @@ class PerfilFragment : Fragment() {
         if (!activar) {
             viewLifecycleOwner.lifecycleScope.launch {
                 userRepository.desactivarHuella(cedulaActual)
-                BiometricKeyManager.eliminarClave(cedulaActual)
                 actualizarSubtituloHuella(false)
                 Toast.makeText(requireContext(), getString(R.string.perfil_huella_desactivada), Toast.LENGTH_SHORT).show()
             }
@@ -188,21 +169,12 @@ class PerfilFragment : Fragment() {
         }
 
         val gestor = BiometricManager.from(requireContext())
-        val puedeAutenticar = gestor.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)
+        val puedeAutenticar = gestor.canAuthenticate(
+            BiometricManager.Authenticators.BIOMETRIC_WEAK or
+                BiometricManager.Authenticators.DEVICE_CREDENTIAL
+        )
         if (puedeAutenticar != BiometricManager.BIOMETRIC_SUCCESS) {
             Toast.makeText(requireContext(), getString(R.string.biometria_no_disponible), Toast.LENGTH_LONG).show()
-            revertirSwitchHuella(false)
-            return
-        }
-
-        BiometricKeyManager.crearClave(cedulaActual)
-        val cipher = try {
-            BiometricKeyManager.obtenerCipher(cedulaActual)
-        } catch (e: KeyPermanentlyInvalidatedException) {
-            null
-        }
-        if (cipher == null) {
-            Toast.makeText(requireContext(), getString(R.string.perfil_huella_error), Toast.LENGTH_SHORT).show()
             revertirSwitchHuella(false)
             return
         }
@@ -229,11 +201,13 @@ class PerfilFragment : Fragment() {
         val info = BiometricPrompt.PromptInfo.Builder()
             .setTitle(getString(R.string.biometria_titulo))
             .setSubtitle(getString(R.string.biometria_subtitulo))
-            .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG)
-            .setNegativeButtonText(getString(R.string.dialogo_cancelar))
+            .setAllowedAuthenticators(
+                BiometricManager.Authenticators.BIOMETRIC_WEAK or
+                    BiometricManager.Authenticators.DEVICE_CREDENTIAL
+            )
             .build()
 
-        prompt.authenticate(info, BiometricPrompt.CryptoObject(cipher))
+        prompt.authenticate(info)
     }
 
     override fun onDestroyView() {

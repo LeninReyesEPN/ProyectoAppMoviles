@@ -13,35 +13,14 @@
         android:orientation="vertical"
         android:padding="24dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/titulo_perfil"
-                android:textColor="@color/text_primary"
-                android:textSize="@dimen/texto_h1"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/btnMenu"
-                android:layout_width="@dimen/touch_min"
-                android:layout_height="@dimen/touch_min"
-                android:background="@drawable/bg_circle_card"
-                android:clickable="true"
-                android:contentDescription="@string/menu_cerrar_sesion"
-                android:focusable="true"
-                android:gravity="center"
-                android:text="☰"
-                android:textColor="@color/text_primary"
-                android:textSize="22sp" />
-        </LinearLayout>
+            android:text="@string/titulo_perfil"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/texto_h1"
+            android:textStyle="bold" />
 
         <!-- Tarjeta de perfil -->
         <LinearLayout
@@ -183,6 +162,7 @@
         <include layout="@layout/item_perfil_opcion" android:id="@+id/rowNotificaciones" />
         <include layout="@layout/item_perfil_opcion" android:id="@+id/rowHistorial" />
         <include layout="@layout/item_perfil_opcion" android:id="@+id/rowCuidador" />
+        <include layout="@layout/item_perfil_opcion" android:id="@+id/rowCerrarSesion" />
 
     </LinearLayout>
 </ScrollView>

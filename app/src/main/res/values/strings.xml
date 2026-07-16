@@ -18,9 +18,8 @@
     <string name="biometria_no_disponible">Tu dispositivo no tiene huella o Face ID configurado</string>
     <string name="biometria_titulo">Ingresa con tu huella o Face ID</string>
     <string name="biometria_subtitulo">Coloca tu dedo en el sensor o mira tu cámara</string>
-    <string name="biometria_sin_sesion">Escribe tu número de cédula para poder usar la huella</string>
+    <string name="biometria_sin_sesion">Ingresa primero con tu cédula y contraseña para activar el acceso rápido</string>
     <string name="biometria_cuenta_sin_huella">Esta cuenta no tiene la huella activada. Ingresa con tu contraseña o actívala en Mi Perfil.</string>
-    <string name="biometria_clave_invalidada">Las huellas de este equipo cambiaron. Vuelve a activar el ingreso con huella en Mi Perfil.</string>
 
     <!-- Contrasena (Login y Registro) -->
     <string name="label_password">CONTRASEÑA</string>
@@ -133,9 +132,9 @@
     <string name="perfil_huella_subtitulo_inactiva">Actívala para no escribir tu contraseña</string>
     <string name="perfil_huella_activada">Huella activada. Ya puedes ingresar sin escribir tu contraseña.</string>
     <string name="perfil_huella_desactivada">Huella desactivada</string>
-    <string name="perfil_huella_error">No se pudo activar la huella. Intenta de nuevo.</string>
 
     <string name="menu_cerrar_sesion">Cerrar sesión</string>
+    <string name="opt_cerrar_sesion_subtitulo">Salir de tu cuenta en este dispositivo</string>
     <string name="dialogo_cerrar_sesion_titulo">Cerrar sesión</string>
     <string name="dialogo_cerrar_sesion_mensaje">¿Seguro que quieres cerrar sesión?</string>
     <string name="dialogo_cerrar_sesion_confirmar">Sí, cerrar sesión</string>

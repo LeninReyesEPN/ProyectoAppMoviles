@@ -28,7 +28,13 @@ object Sesion {
     fun haySesionActiva(context: Context): Boolean =
         obtenerCedula(context).isNotBlank()
 
+    /**
+     * Vuelve a la pantalla de Login, pero NO borra la cedula recordada: si se borrara,
+     * el acceso rapido con huella (activado en Mi Perfil) dejaria de saber a que cuenta
+     * entrar despues de cerrar sesion, justo el caso de uso que debe seguir funcionando
+     * (entrar de nuevo con huella, sin volver a escribir la contrasena).
+     */
     fun cerrarSesion(context: Context) {
-        prefs(context).edit().remove(KEY_CEDULA).apply()
+        // Intencionalmente vacio: ver comentario de la funcion.
     }
 }
