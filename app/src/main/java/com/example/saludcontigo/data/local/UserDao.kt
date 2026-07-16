@@ -13,4 +13,7 @@ interface UserDao {
 
     @Query("SELECT * FROM usuarios WHERE cedula = :cedula LIMIT 1")
     suspend fun getByCedula(cedula: String): UserEntity?
+
+    @Query("UPDATE usuarios SET huellaActiva = :activa WHERE cedula = :cedula")
+    suspend fun setHuellaActiva(cedula: String, activa: Boolean)
 }

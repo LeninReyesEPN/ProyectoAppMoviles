@@ -13,14 +13,35 @@
         android:orientation="vertical"
         android:padding="24dp">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:text="@string/titulo_perfil"
-            android:textColor="@color/text_primary"
-            android:textSize="@dimen/texto_h1"
-            android:textStyle="bold" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/titulo_perfil"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/texto_h1"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/btnMenu"
+                android:layout_width="@dimen/touch_min"
+                android:layout_height="@dimen/touch_min"
+                android:background="@drawable/bg_circle_card"
+                android:clickable="true"
+                android:contentDescription="@string/menu_cerrar_sesion"
+                android:focusable="true"
+                android:gravity="center"
+                android:text="☰"
+                android:textColor="@color/text_primary"
+                android:textSize="22sp" />
+        </LinearLayout>
 
         <!-- Tarjeta de perfil -->
         <LinearLayout
@@ -63,18 +84,6 @@
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/texto_label"
                     tools:text="C.C. 19456789 · 71 años" />
-
-                <TextView
-                    android:id="@+id/tvEpsBadge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/bg_pill"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="3dp"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/texto_label"
-                    tools:text="EPS Compensar" />
             </LinearLayout>
         </LinearLayout>
 
@@ -166,6 +175,9 @@
                     android:textSize="@dimen/texto_label" />
             </LinearLayout>
         </LinearLayout>
+
+        <!-- Seguridad -->
+        <include layout="@layout/item_perfil_opcion_switch" android:id="@+id/rowHuella" />
 
         <!-- Opciones -->
         <include layout="@layout/item_perfil_opcion" android:id="@+id/rowNotificaciones" />

@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 
 @Database(
     entities = [UserEntity::class, AppointmentEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -25,7 +25,8 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "salud_contigo.db"
-                ).build().also { instancia = it }
+                ).fallbackToDestructiveMigration(dropAllTables = true)
+                    .build().also { instancia = it }
             }
     }
 }

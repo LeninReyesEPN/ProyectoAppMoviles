@@ -4,7 +4,7 @@ import android.content.Context
 
 /**
  * Guarda solo un puntero a la persona con sesion activa (su cedula).
- * Los datos reales (nombre, edad, EPS, citas) viven en Room.
+ * Los datos reales (nombre, edad, citas) viven en Room.
  */
 object Sesion {
 

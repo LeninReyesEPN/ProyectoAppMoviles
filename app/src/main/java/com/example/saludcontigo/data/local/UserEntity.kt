@@ -8,5 +8,7 @@ data class UserEntity(
     @PrimaryKey val cedula: String,
     val nombre: String,
     val edad: Int?,
-    val eps: String?
+    val passwordHash: String,
+    val passwordSalt: String,
+    val huellaActiva: Boolean = false
 )

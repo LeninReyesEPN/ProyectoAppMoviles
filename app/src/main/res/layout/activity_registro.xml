@@ -59,42 +59,101 @@
             android:textColorHint="@color/text_secondary"
             android:textSize="@dimen/texto_body" />
 
-        <LinearLayout
+        <EditText
+            android:id="@+id/txtEdad"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/touch_min"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_input"
+            android:hint="@string/hint_edad"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:paddingHorizontal="20dp"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_secondary"
+            android:textSize="@dimen/texto_body" />
+
+        <!-- Campo: Contrasena -->
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="8dp"
+            android:letterSpacing="0.05"
+            android:text="@string/label_password"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/texto_label"
+            android:textStyle="bold" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/touch_min">
 
             <EditText
-                android:id="@+id/txtEdad"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/touch_min"
-                android:layout_marginEnd="6dp"
-                android:layout_weight="1"
+                android:id="@+id/txtPassword"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:background="@drawable/bg_input"
-                android:hint="@string/hint_edad"
+                android:hint="@string/hint_password"
                 android:importantForAutofill="no"
-                android:inputType="number"
-                android:paddingHorizontal="20dp"
+                android:inputType="textPassword"
+                android:paddingStart="20dp"
+                android:paddingEnd="64dp"
                 android:textColor="@color/text_primary"
                 android:textColorHint="@color/text_secondary"
                 android:textSize="@dimen/texto_body" />
 
-            <EditText
-                android:id="@+id/txtEps"
-                android:layout_width="0dp"
+            <ImageButton
+                android:id="@+id/btnTogglePassword"
+                android:layout_width="@dimen/touch_min"
                 android:layout_height="@dimen/touch_min"
-                android:layout_marginStart="6dp"
-                android:layout_weight="1"
+                android:layout_gravity="end|center_vertical"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/desc_mostrar_password"
+                android:padding="18dp"
+                android:src="@drawable/ic_eye_off" />
+        </FrameLayout>
+
+        <!-- Campo: Confirmar contrasena -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:letterSpacing="0.05"
+            android:text="@string/label_confirmar_password"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/texto_label"
+            android:textStyle="bold" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/touch_min">
+
+            <EditText
+                android:id="@+id/txtPasswordConfirmar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:background="@drawable/bg_input"
-                android:hint="@string/hint_eps"
+                android:hint="@string/hint_confirmar_password"
                 android:importantForAutofill="no"
-                android:inputType="text"
-                android:paddingHorizontal="20dp"
+                android:inputType="textPassword"
+                android:paddingStart="20dp"
+                android:paddingEnd="64dp"
                 android:textColor="@color/text_primary"
                 android:textColorHint="@color/text_secondary"
                 android:textSize="@dimen/texto_body" />
-        </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/btnTogglePasswordConfirmar"
+                android:layout_width="@dimen/touch_min"
+                android:layout_height="@dimen/touch_min"
+                android:layout_gravity="end|center_vertical"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/desc_mostrar_password"
+                android:padding="18dp"
+                android:src="@drawable/ic_eye_off" />
+        </FrameLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnRegistrarme"
